@@ -4,12 +4,16 @@
   "private": true,
   "dependencies": {
     "@types/jest": "24.0.4",
+    "@types/lodash-es": "^4.17.2",
     "@types/node": "11.9.3",
     "@types/react": "16.8.3",
     "@types/react-dom": "16.8.1",
+    "lodash-es": "^4.17.11",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
+    "react-fastclick": "^3.0.2",
     "react-scripts": "2.1.5",
+    "react-with-gesture": "^4.0.4",
     "typescript": "3.3.3"
   },
   "scripts": {
@@ -26,5 +30,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "node-sass": "^4.11.0"
+  }
 }
