@@ -2,6 +2,7 @@ import * as types from './actionType';
 export interface State {
   current: {
     url: string;
+    [propName: string]: any;
   };
 }
 export interface Action {

@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import styles from './index.module.scss';
 import { clamp } from 'lodash';
+import classNames from 'classnames';
+import styles from './index.module.scss';
 
 interface ProgressBarProps {
+  wrapperClassName?: string;
   onChange?: Function;
   percent: number;
 }
@@ -30,21 +32,19 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
     if (onChange) onChange(this.state.barWidth);
   };
 
-  componentDidMount() {
-    document.addEventListener('mousemove', this.dragEvent);
-    document.addEventListener('mouseup', this.onDrop);
-  }
+  onDrag = ({ touches }: React.TouchEvent) => {
+    const { pageX } = touches[0];
+    this.dragStart = pageX;
+    this.isDrag = true;
+    this.prevBarWidth = this.props.percent || 0;
+  };
 
-  componentWillUnmount() {
-    document.removeEventListener('mousemove', this.dragEvent);
-    document.removeEventListener('mouseup', this.onDrop);
-  }
-
-  dragEvent = ({ pageX }: MouseEvent) => {
+  onMove = ({ touches }: React.TouchEvent) => {
+    if (!this.isDrag) return;
+    const { pageX } = touches[0];
     if (this.wrapper.current === null)
       throw new Error("can't get progress width,progress wrapper is null");
     const { width } = this.wrapper.current.getBoundingClientRect();
-    if (!this.isDrag) return;
     this.setState(
       {
         barWidth: clamp(
@@ -57,13 +57,7 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
     );
   };
 
-  onDrag = ({ pageX }: React.MouseEvent) => {
-    this.dragStart = pageX;
-    this.isDrag = true;
-    this.prevBarWidth = this.props.percent || 0;
-  };
-
-  onDrop = () => {
+  onEnd = () => {
     this.isDrag = false;
     this.prevBarWidth = this.state.barWidth;
   };
@@ -81,17 +75,18 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
   render() {
     const percent = this.isDrag ? this.state.barWidth : this.props.percent;
     return (
-      <div className={styles.progress}>
+      <div className={classNames(styles.progress, this.props.wrapperClassName)}>
         <div
           className={styles.barWrapper}
           ref={this.wrapper}
-          onMouseDown={this.onTapBar}
+          onClick={this.onTapBar}
         >
           <div className={styles.bar} style={{ width: percent + '%' }}>
             <div
-              onMouseDown={this.onDrag}
-              onMouseUp={this.onDrop}
               className={styles.button}
+              onTouchStart={this.onDrag}
+              onTouchMove={this.onMove}
+              onTouchEnd={this.onEnd}
             />
           </div>
         </div>

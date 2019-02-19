@@ -1,25 +1,28 @@
+@import '../../scss/variables';
+@import '../../scss/utils';
 .progress {
-  margin: 100px auto;
-  height: 20px;
-  width: 400px;
-  background: wheat;
-  border: 1px solid;
-  .barWrapper{
+  width: rem(320);
+  height: rem(6);
+  border: 1px solid #fff;
+  background: $secondaryColor;
+  .barWrapper {
     width: 100%;
     height: 100%;
     .bar {
       position: relative;
       height: 100%;
-      background: #61dafb;
+      border-radius: 3px;
+      background: $mainColor;
     }
     .button {
       position: absolute;
-      width: 18px;
-      height: 18px;
-      background: #000;
+      width: rem(12);
+      height: rem(12);
+      background: $mainColor;
       border-radius: 50%;
-      right: - 9px;
-      top: calc(50% - 9px);
+      border: 1px solid #fff;
+      right: -6px;
+      top: calc(50% - 6px);
     }
   }
 }

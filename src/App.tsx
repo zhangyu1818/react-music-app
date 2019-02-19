@@ -6,15 +6,16 @@ import Context from './context';
 import Home from './pages/Home';
 import Search from './pages/Search';
 import { CHANGE_CURRENT_SONG } from './reducer/actionType';
+import { fetchSong } from './utils/song';
+
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
-    fetch('http://localhost:3001/song/url?id=187067')
-      .then(res => res.json())
-      .then(({ data }) => {
-        console.log(data[0])
-        dispatch({ type: CHANGE_CURRENT_SONG, payload: data[0] });
-      });
+    (async () => {
+      const current = await fetchSong(531777461);
+      dispatch({ type: CHANGE_CURRENT_SONG, payload: current });
+      console.log(current)
+    })();
   }, []);
   return (
     <Context.Provider value={{ state, dispatch }}>

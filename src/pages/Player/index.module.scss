@@ -1,0 +1,79 @@
+@import '../../scss/utils';
+$Left: 45;
+.playerWrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  .album {
+    position: absolute;
+    left: rem($Left);
+    bottom: rem(370);
+    font-size: 0;
+    width: rem(200);
+    background: url('../../assets/images/picBG.png') right/rem(165) no-repeat;
+    .pic {
+      width: rem(165);
+      height: rem(165);
+      box-shadow: rem(2) rem(2) rem(8) 0 #a2a1a7;
+      background: url('../../assets/images/albumHolder.jpg') center/cover
+        no-repeat;
+    }
+  }
+  .buttonGroup {
+    position: absolute;
+    bottom: rem(260);
+    left: rem($Left);
+    background: lighten($mainColor, 6%);
+    font-size: 0;
+    border: 2px solid $mainColor;
+    display: inline-block;
+    border-radius: 2px;
+    .button {
+      color: #fff;
+      border: none;
+      outline: none;
+      width: rem(106);
+      height: rem(50);
+      background: transparent;
+    }
+    .prevButton {
+    }
+    .actionButton {
+      border-left: 2px solid lighten($mainColor, 10%);
+      border-right: 2px solid lighten($mainColor, 10%);
+    }
+    .nextButton {
+    }
+  }
+  .songInfo {
+    position: absolute;
+    left: rem($Left);
+    bottom: rem(150);
+    color: $mainColor;
+    .name {
+      margin: 0 0 rem(16);
+      font-size: rem(16);
+      font-weight: bolder;
+    }
+    .singerName {
+      margin: 0;
+      font-size: rem(12);
+    }
+  }
+  .backgroundProgress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: $secondaryColor;
+    z-index: -1;
+  }
+  .progress {
+    position: absolute;
+    bottom: rem(84);
+    left: rem($Left);
+  }
+}

@@ -1,6 +1,9 @@
 import React, { useContext, useRef, useState } from 'react';
+import classNames from 'classnames';
 import Context from '../../context';
+
 import ProgressBar from '../../components/Progress';
+import styles from './index.module.scss';
 
 const formatTime = (time: number) => {
   const min = (time / 60) | 0;
@@ -12,8 +15,9 @@ const Player = () => {
   const {
     state: { current }
   } = useContext(Context);
-  const audioRef = useRef<HTMLAudioElement>(null);
   const [percent, setPercent] = useState(0);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const audioPlayState = useRef<boolean>(false);
   const [timeLine, setTimeLine] = useState('0:00/0:00');
   const onAudioPlay = () => {
     const temp =
@@ -30,11 +34,41 @@ const Player = () => {
   const refreshTimeLine = () => {
     console.log(formatTime((audioRef.current as HTMLAudioElement).currentTime));
   };
+  const togglePlayState = () => {
+    if (!audioRef.current) return;
+    audioPlayState.current ? audioRef.current.play() : audioRef.current.pause();
+    audioPlayState.current = !audioPlayState.current;
+  };
   return (
-    <div>
-      <ProgressBar percent={percent} onChange={onProgressChange} />
+    <div className={styles.playerWrapper}>
+      <div
+        className={styles.backgroundProgress}
+        style={{ width: `${percent}%` }}
+      />
+      <div className={styles.album}>
+        <img className={styles.pic} src={current.picUrl} alt='' />
+      </div>
+      <div className={styles.buttonGroup}>
+        <button className={styles.button}>上</button>
+        <button
+          className={classNames(styles.button, styles.actionButton)}
+          onClick={togglePlayState}
+        >
+          停
+        </button>
+        <button className={styles.button}>下</button>
+      </div>
+      <div className={styles.songInfo}>
+        <p className={styles.name}>{current.name}</p>
+        <p className={styles.singerName}>{current.singerName}</p>
+      </div>
+      <ProgressBar
+        percent={percent}
+        onChange={onProgressChange}
+        wrapperClassName={styles.progress}
+      />
       <audio
-        controls
+        autoPlay
         src={current.url}
         ref={audioRef}
         onTimeUpdate={onAudioPlay}
