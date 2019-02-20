@@ -14,15 +14,22 @@
       border-radius: 3px;
       background: $mainColor;
     }
-    .button {
+    .buttonWrapper {
       position: absolute;
-      width: rem(12);
-      height: rem(12);
-      background: $mainColor;
-      border-radius: 50%;
-      border: 1px solid #fff;
-      right: -6px;
-      top: calc(50% - 6px);
+      top: 50%;
+      right: 0;
+      width: rem(30);
+      height: rem(30);
+      transform: translateX(50%) translateY(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .button {
+        width: rem(12);
+        height: rem(12);
+        background: $mainColor;
+        border-radius: 50%;
+      }
     }
   }
 }

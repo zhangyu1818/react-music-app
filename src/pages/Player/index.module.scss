@@ -6,14 +6,72 @@ $Left: 45;
   bottom: 0;
   left: 0;
   right: 0;
-  background: #ffffff;
-  .album {
+  background: $secondaryColor;
+  .topBar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: rem(50);
+    background: #000;
+  }
+  .controllerGroup {
+    font-size: 0;
     position: absolute;
     left: rem($Left);
+    bottom: rem(560);
+    .button {
+      & + .button {
+        margin-left: rem(30);
+      }
+      border: none;
+      outline: none;
+      background: transparent;
+    }
+  }
+  .lyric {
+    width: rem(318);
+    height: rem(170);
+    position: absolute;
+    left: rem($Left);
+    bottom: rem(340);
+  }
+  .album {
+    position: absolute;
+    padding: 0 rem(45);
+    left: 0;
     bottom: rem(370);
     font-size: 0;
-    width: rem(200);
+    width: rem(240);
     background: url('../../assets/images/picBG.png') right/rem(165) no-repeat;
+    &:before {
+      position: absolute;
+      left: rem(70);
+      bottom: rem(-48);
+      z-index: -1;
+      transform-style: preserve-3d;
+      content: '';
+      width: rem(200);
+      height: rem(150);
+      transform: perspective(rem(500)) rotateX(70deg) rotateZ(30deg);
+      display: block;
+      border-radius: 50%;
+      box-shadow: -80px 20px 60px 0 rgba(0, 0, 0, 0.5);
+    }
+    &:after {
+      position: absolute;
+      right: rem(50);
+      bottom: rem(-48);
+      z-index: -1;
+      transform-style: preserve-3d;
+      content: '';
+      width: rem(200);
+      height: rem(150);
+      transform: perspective(rem(500)) rotateX(70deg) rotateZ(-20deg);
+      display: block;
+      border-radius: 50%;
+      box-shadow: 80px 20px 50px 0 rgba(0, 0, 0, 0.4);
+    }
     .pic {
       width: rem(165);
       height: rem(165);
@@ -26,11 +84,11 @@ $Left: 45;
     position: absolute;
     bottom: rem(260);
     left: rem($Left);
-    background: lighten($mainColor, 6%);
+    background: lighten($mainColor, 7%);
     font-size: 0;
     border: 2px solid $mainColor;
     display: inline-block;
-    border-radius: 2px;
+    border-radius: 3px;
     .button {
       color: #fff;
       border: none;
@@ -55,7 +113,7 @@ $Left: 45;
     color: $mainColor;
     .name {
       margin: 0 0 rem(16);
-      font-size: rem(16);
+      font-size: rem(18);
       font-weight: bolder;
     }
     .singerName {
@@ -63,13 +121,23 @@ $Left: 45;
       font-size: rem(12);
     }
   }
+  .timeline {
+    position: absolute;
+    font-size: rem(12);
+    color: $mainColor;
+    right: rem(16);
+    bottom: rem(48);
+  }
   .backgroundProgress {
     position: absolute;
     top: 0;
+    bottom: 0;
     left: 0;
-    height: 100%;
-    background: $secondaryColor;
+    right: 0;
+    background: #fff;
     z-index: -1;
+    will-change: transform;
+    pointer-events: none;
   }
   .progress {
     position: absolute;

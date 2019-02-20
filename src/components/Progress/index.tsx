@@ -83,11 +83,13 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
         >
           <div className={styles.bar} style={{ width: percent + '%' }}>
             <div
-              className={styles.button}
+              className={styles.buttonWrapper}
               onTouchStart={this.onDrag}
               onTouchMove={this.onMove}
               onTouchEnd={this.onEnd}
-            />
+            >
+              <div className={styles.button} />
+            </div>
           </div>
         </div>
       </div>
