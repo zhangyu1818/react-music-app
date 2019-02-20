@@ -16,6 +16,7 @@ class Lyric extends PureComponent<any, LyricState> {
   lyricStr: string = '';
   lyricControl: LyricParser | null = null;
   isPlay: boolean | undefined;
+  isDrag: boolean = false;
   static contextType = Context;
   linesEle: Array<HTMLParagraphElement> = [];
   state = {
@@ -26,13 +27,19 @@ class Lyric extends PureComponent<any, LyricState> {
   componentDidMount() {
     if (!this.scrollRef.current) return;
     this.bScroll = new BScroll(this.scrollRef.current);
+    this.bScroll.on('scrollStart', () => {
+      this.isDrag = true;
+    });
+    let timer: number | null = null;
+    this.bScroll.on('touchEnd', () => {
+      if (timer) clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        this.isDrag = false;
+      }, 3000);
+    });
     this.isPlay = this.context.state.isPlay;
   }
-  componentDidUpdate(
-    prevProps: Readonly<any>,
-    prevState: Readonly<any>,
-    snapshot?: any
-  ): void {
+  componentDidUpdate() {
     const { state } = this.context;
     if (state.current.lyric && state.current.lyric !== this.lyricStr) {
       this.lyricControl && this.lyricControl.stop();
@@ -50,7 +57,7 @@ class Lyric extends PureComponent<any, LyricState> {
           this.setState({
             currentLine: lineNum
           });
-          if (lineNum < 4 || !this.bScroll) return;
+          if (lineNum < 4 || !this.bScroll || this.isDrag) return;
           const currentLineEle = this.linesEle[lineNum - 3];
           this.bScroll.scrollToElement(currentLineEle, 400);
         }
@@ -59,6 +66,7 @@ class Lyric extends PureComponent<any, LyricState> {
         lyricLines: this.lyricControl.lines
       });
       this.linesEle = [];
+      if (this.bScroll) this.bScroll.refresh();
     }
     if (state.isPlay !== this.isPlay && this.lyricControl) {
       this.isPlay = state.isPlay;
@@ -89,42 +97,4 @@ class Lyric extends PureComponent<any, LyricState> {
   }
 }
 
-let bScroll: any;
-// const Lyric = React.memo((props: any) => {
-//   const {
-//     state: { current, isPlay }
-//   } = useContext(Context);
-//   const scrollRef = useRef<HTMLDivElement | null>(null);
-//   const [lyricLines, setLyric] = useState([]);
-//   const lyricController = useRef<null | LyricParser>(null);
-//   useEffect(
-//     () => {
-//       if (!current.lyric) return;
-//       lyricController.current && lyricController.current.stop();
-//       lyricController.current = new LyricParser(
-//         current.lyric,
-//         ({ lineNum }: any) => {
-//
-//         }
-//       );
-//       setLyric(lyricController.current.lines);
-//     },
-//     [current.lyric]
-//   );
-//   useEffect(
-//     () => {
-//       if (!lyricController.current) return;
-//       lyricController.current.togglePlay();
-//     },
-//     [isPlay]
-//   );
-//   useEffect(() => {
-//     if (scrollRef.current) {
-//       bScroll =new BScroll(scrollRef.current);
-//     }
-//   }, []);
-//   useEffect(()=>{
-//     console.log(bScroll)
-//   })
-// });
 export default Lyric;

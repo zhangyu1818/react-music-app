@@ -25,9 +25,6 @@ const Player = () => {
   } = useContext(Context);
   // 进度
   const [percent, setPercent] = useState(0);
-  // 歌词
-  const lyricController = useRef<any>(null);
-  const [lyric, setLyric] = useState([]);
   // audio react.ref
   const audioRef = useRef<HTMLAudioElement>(null);
   // 播放时间
@@ -88,13 +85,7 @@ const Player = () => {
       {/*<img className={styles.pic} src={current.picUrl} alt='' />*/}
       {/*</div>*/}
       <div className={styles.lyric}>
-        <Lyric
-          time={
-            audioRef.current
-              ? (audioRef.current as HTMLAudioElement).currentTime
-              : 0
-          }
-        />
+        <Lyric />
       </div>
       {/*歌曲控制组*/}
       <div className={styles.buttonGroup}>
