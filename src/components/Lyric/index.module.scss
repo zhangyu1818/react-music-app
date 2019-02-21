@@ -21,7 +21,7 @@
       margin: rem(8) 0;
       overflow: hidden;
       &.currentLine {
-        color: darken($mainColor,8%);
+        color: darken($mainColor, 8%);
         font-size: rem(14);
       }
     }
