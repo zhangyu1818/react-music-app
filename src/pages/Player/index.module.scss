@@ -28,55 +28,58 @@ $Left: 45;
       background: transparent;
     }
   }
-  .lyric {
-    width: rem(318);
-    height: rem(170);
+  .tabs {
     position: absolute;
-    left: rem($Left);
-    bottom: rem(340);
-  }
-  .album {
-    position: absolute;
-    padding: 0 rem(45);
     left: 0;
-    bottom: rem(370);
-    font-size: 0;
-    width: rem(240);
-    background: url('../../assets/images/picBG.png') right/rem(165) no-repeat;
-    &:before {
-      position: absolute;
-      left: rem(70);
-      bottom: rem(-48);
-      z-index: -1;
-      transform-style: preserve-3d;
-      content: '';
-      width: rem(200);
-      height: rem(150);
-      transform: perspective(rem(500)) rotateX(70deg) rotateZ(30deg);
-      display: block;
-      border-radius: 50%;
-      box-shadow: -80px 20px 60px 0 rgba(0, 0, 0, 0.5);
+    bottom: rem(340);
+    .lyric {
+      width: rem(318);
+      height: rem(170);
+      position: relative;
+      margin-left: rem($Left);
     }
-    &:after {
-      position: absolute;
-      right: rem(50);
-      bottom: rem(-48);
-      z-index: -1;
-      transform-style: preserve-3d;
-      content: '';
-      width: rem(200);
-      height: rem(150);
-      transform: perspective(rem(500)) rotateX(70deg) rotateZ(-20deg);
-      display: block;
-      border-radius: 50%;
-      box-shadow: 80px 20px 50px 0 rgba(0, 0, 0, 0.4);
-    }
-    .pic {
-      width: rem(165);
-      height: rem(165);
-      box-shadow: rem(2) rem(2) rem(8) 0 #a2a1a7;
-      background: url('../../assets/images/albumHolder.jpg') center/cover
-        no-repeat;
+    .album {
+      position: relative;
+      margin-left: rem($Left);
+      padding: 0 rem(45);
+      font-size: 0;
+      width: rem(240);
+      background: url('../../assets/images/picBG.png') right/rem(165) no-repeat;
+      &:before {
+        position: absolute;
+        left: rem(70);
+        bottom: rem(-48);
+        z-index: -1;
+        transform-style: preserve-3d;
+        content: '';
+        width: rem(200);
+        height: rem(150);
+        transform: perspective(rem(500)) rotateX(70deg) rotateZ(30deg);
+        display: block;
+        border-radius: 50%;
+        box-shadow: -80px 20px 60px 0 rgba(0, 0, 0, 0.5);
+      }
+      &:after {
+        position: absolute;
+        right: rem(50);
+        bottom: rem(-48);
+        z-index: -1;
+        transform-style: preserve-3d;
+        content: '';
+        width: rem(200);
+        height: rem(150);
+        transform: perspective(rem(500)) rotateX(70deg) rotateZ(-20deg);
+        display: block;
+        border-radius: 50%;
+        box-shadow: 80px 20px 50px 0 rgba(0, 0, 0, 0.4);
+      }
+      .pic {
+        width: rem(165);
+        height: rem(165);
+        box-shadow: rem(2) rem(2) rem(8) 0 #a2a1a7;
+        background: url('../../assets/images/albumHolder.jpg') center/cover
+          no-repeat;
+      }
     }
   }
   .buttonGroup {

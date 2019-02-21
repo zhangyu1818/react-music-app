@@ -13,6 +13,7 @@
     rgba(255, 255, 255, 0) 100%
   );
   .lyricScroll {
+    padding: 0.6rem 0 1rem;
     .line {
       color: lighten($mainColor, 10%);
       text-align: center;
@@ -20,7 +21,8 @@
       margin: rem(8) 0;
       overflow: hidden;
       &.currentLine {
-        color: red;
+        color: darken($mainColor,8%);
+        font-size: rem(14);
       }
     }
   }

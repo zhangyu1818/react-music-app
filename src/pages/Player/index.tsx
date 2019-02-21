@@ -6,6 +6,7 @@ import ProgressBar from '../../components/Progress';
 import Lyric from '../../components/Lyric';
 import styles from './index.module.scss';
 import { CHANGE_PLAY_STATE } from '../../reducer/actionType';
+import Tabs, { TabPane } from '../../components/Tabs';
 
 /**
  * 格式化时间
@@ -25,6 +26,7 @@ const Player = () => {
   } = useContext(Context);
   // 进度
   const [percent, setPercent] = useState(0);
+  const [dragProgress, setDragProgress] = useState(false);
   // audio react.ref
   const audioRef = useRef<HTMLAudioElement>(null);
   // 播放时间
@@ -50,6 +52,16 @@ const Player = () => {
   const onProgressChange = (percent: number) => {
     (audioRef.current as HTMLAudioElement).currentTime =
       (percent / 100) * (audioRef.current as HTMLAudioElement).duration;
+    setDragProgress(true);
+  };
+  // 手动改变进度条传入进度给歌词
+  const lyricChange = (): undefined | number => {
+    if (!dragProgress) return;
+    const tempState = dragProgress;
+    setDragProgress(false);
+    return audioRef.current
+      ? (audioRef.current as HTMLAudioElement).currentTime
+      : 0;
   };
   // 刷新歌曲时间显示
   const refreshTimeline = () => {
@@ -81,12 +93,18 @@ const Player = () => {
         </button>
       </div>
       {/*歌曲封面*/}
-      {/*<div className={styles.album}>*/}
-      {/*<img className={styles.pic} src={current.picUrl} alt='' />*/}
-      {/*</div>*/}
-      <div className={styles.lyric}>
-        <Lyric />
-      </div>
+      <Tabs className={styles.tabs}>
+        <TabPane>
+          <div className={styles.album}>
+            <img className={styles.pic} src={current.picUrl} alt='' />
+          </div>
+        </TabPane>
+        <TabPane>
+          <div className={styles.lyric}>
+            <Lyric progressChange={lyricChange} />
+          </div>
+        </TabPane>
+      </Tabs>
       {/*歌曲控制组*/}
       <div className={styles.buttonGroup}>
         <button className={styles.button}>

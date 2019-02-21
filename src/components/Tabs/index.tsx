@@ -1,9 +1,5 @@
-import React, { PureComponent } from 'react';
-
-class Tabs extends PureComponent {
-  render() {
-    return <div>{this.props.children}</div>;
-  }
-}
+import Tabs from './Tabs';
+import TabPane from './TabPane';
 
 export default Tabs;
+export { TabPane };

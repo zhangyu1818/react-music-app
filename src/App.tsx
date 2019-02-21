@@ -12,9 +12,9 @@ const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
     (async () => {
-      const current = await fetchSong(531777461);
+      const current = await fetchSong(357279);
       dispatch({ type: CHANGE_CURRENT_SONG, payload: current });
-      console.log(current)
+      console.log(current);
     })();
   }, []);
   return (

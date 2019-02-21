@@ -1,0 +1,8 @@
+.tabsWrapper {
+  width: 100%;
+  .tabPaneScroll {
+    width: 100%;
+    white-space: nowrap;
+    will-change: transform;
+  }
+}

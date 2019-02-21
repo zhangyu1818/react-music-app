@@ -2,10 +2,8 @@ import React, { PureComponent } from 'react';
 import Context from '../../context';
 import classNames from 'classnames';
 import styles from './index.module.scss';
+import LyricParser, { Line } from '../../utils/lyricParser';
 import BScroll from 'better-scroll';
-
-// @ts-ignore
-import LyricParser from 'lyric-parser';
 
 interface LyricState {
   lyricLines: Array<object>;
@@ -41,12 +39,17 @@ class Lyric extends PureComponent<any, LyricState> {
   }
   componentDidUpdate() {
     const { state } = this.context;
+    const { progressChange } = this.props;
+    const currentTime = progressChange();
+    if (currentTime && this.lyricControl) {
+      this.lyricControl.seek(currentTime * 1000);
+    }
     if (state.current.lyric && state.current.lyric !== this.lyricStr) {
       this.lyricControl && this.lyricControl.stop();
       this.lyricStr = state.current.lyric;
       this.lyricControl = new LyricParser(
         this.lyricStr,
-        ({ txt, lineNum }: any) => {
+        ({ txt, lineNum }: Line) => {
           if (!this.linesEle.length) {
             this.linesEle = Array.from(
               (this.scrollRef.current as HTMLDivElement).querySelectorAll(
@@ -57,9 +60,9 @@ class Lyric extends PureComponent<any, LyricState> {
           this.setState({
             currentLine: lineNum
           });
-          if (lineNum < 4 || !this.bScroll || this.isDrag) return;
-          const currentLineEle = this.linesEle[lineNum - 3];
-          this.bScroll.scrollToElement(currentLineEle, 400);
+          if (!this.bScroll || this.isDrag) return;
+          const currentLineEle = this.linesEle[lineNum];
+          this.bScroll.scrollToElement(currentLineEle, 400, 0, true);
         }
       );
       this.setState({
@@ -70,7 +73,7 @@ class Lyric extends PureComponent<any, LyricState> {
     }
     if (state.isPlay !== this.isPlay && this.lyricControl) {
       this.isPlay = state.isPlay;
-      this.lyricControl.togglePlay();
+      this.isPlay ? this.lyricControl.continue() : this.lyricControl.pause();
     }
   }
 
