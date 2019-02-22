@@ -25,7 +25,7 @@ const App = () => {
           <Route path='/search' exact component={Search} />
         </>
       </Router>
-      <Player />
+      {/*<Player />*/}
     </Context.Provider>
   );
 };

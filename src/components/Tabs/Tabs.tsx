@@ -61,7 +61,7 @@ class Tabs extends PureComponent<TabsProp, TabsState> {
   onTouchEnd = () => {
     const {
       switchOffset = 0.3,
-      criticalSpeed = 0.5,
+      criticalSpeed = 0.4,
       animateTime = 0.1
     } = this.props;
     const timeStamp = this.dragMove.timeStamp - this.dragStart.timeStamp;
@@ -92,13 +92,13 @@ class Tabs extends PureComponent<TabsProp, TabsState> {
       if (!lastTimeStamp) lastTimeStamp = timeStamp;
       const distance = index * -100 - this.state.offset;
       const speed = distance / time;
-      const delay = timeStamp - lastTimeStamp;
+      const delta = timeStamp - lastTimeStamp;
       if (Math.abs(speed) < 0.0001) {
         if (this.animateTimer) cancelAnimationFrame(this.animateTimer);
         return;
       }
       this.setState(
-        { offset: this.prevOffset + (speed * delay) / 1000 },
+        { offset: this.prevOffset + speed * (delta / 1000) },
         () => {
           this.prevOffset = this.state.offset;
           lastTimeStamp = timeStamp;

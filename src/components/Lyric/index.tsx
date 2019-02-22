@@ -12,6 +12,7 @@ interface LyricState {
 class Lyric extends PureComponent<any, LyricState> {
   scrollRef = React.createRef<HTMLDivElement>();
   lyricStr: string = '';
+  songId: number | undefined;
   lyricControl: LyricParser | null = null;
   isPlay: boolean | undefined;
   isDrag: boolean = false;
@@ -44,9 +45,10 @@ class Lyric extends PureComponent<any, LyricState> {
     if (currentTime && this.lyricControl) {
       this.lyricControl.seek(currentTime * 1000);
     }
-    if (state.current.lyric && state.current.lyric !== this.lyricStr) {
+    if (state.current.id && state.current.id !== this.songId) {
       this.lyricControl && this.lyricControl.stop();
       this.lyricStr = state.current.lyric;
+      this.songId = state.current.id;
       this.lyricControl = new LyricParser(
         this.lyricStr,
         ({ txt, lineNum }: Line) => {
