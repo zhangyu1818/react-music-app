@@ -3,24 +3,18 @@
 .swiper {
   position: relative;
   touch-action: none;
-  width: 100%;
   overflow: hidden;
+  width: 100%;
   .animate {
+    position: relative;
+    font-size: 0;
     width: 100%;
-    height: 100%;
+    white-space: nowrap;
     .swiperSlider {
-      position: absolute;
-      top: 0;
-      left: 0;
+      display: inline-block;
       width: 100%;
-      height: 100%;
-      will-change: transform;
       .swiperImg {
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center center;
         width: 100%;
-        height: 100%;
         will-change: transform;
       }
     }

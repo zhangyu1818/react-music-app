@@ -11,15 +11,10 @@ class SwiperSlider extends PureComponent<SwiperSliderProps, any> {
     offset: 0
   };
   render() {
-    const { children, offset = 0, scale = 1 } = this.props;
+    const { children, scale = 1 } = this.props;
     const shadow = 1 - scale;
     return (
-      <div
-        className={styles.swiperSlider}
-        style={{
-          transform: `translate3d(${offset * 100}%,0,0)`
-        }}
-      >
+      <div className={styles.swiperSlider}>
         <div
           className={styles.swiperImg}
           style={{

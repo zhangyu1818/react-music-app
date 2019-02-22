@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Player from './pages/Player';
 import { initialState, reducer } from './reducer';
@@ -19,6 +19,7 @@ const App = () => {
   }, []);
   return (
     <Context.Provider value={{ state, dispatch }}>
+      <h1 className='app-title'>MUSIC</h1>
       <Router>
         <>
           <Route path='/' exact component={Home} />

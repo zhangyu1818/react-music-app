@@ -22,6 +22,14 @@ html {
   * {
     box-sizing: border-box;
   }
+  .app-title {
+    padding: rem(10);
+    color: #fff;
+    background: $mainColor;
+    font-size: rem(24);
+    text-align: center;
+    margin: 0 0 rem(10);
+  }
 }
 @font-face {
   font-family: 'iconfont';

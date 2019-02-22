@@ -12,9 +12,9 @@ const Home = () => {
     fetch('/banner')
       .then((res) => res.json())
       .then(({ banners }) => setBanners(banners));
-  });
+  }, []);
   return (
-    <Swiper className={styles.banner}>
+    <Swiper className={styles.banner} loop>
       {banners.map((banner: Banner, index) => (
         <SwiperSlider key={index}>
           <div

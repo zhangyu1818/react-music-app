@@ -11,35 +11,62 @@ interface SwiperProps {
   criticalSpeed?: number;
   animateTime?: number;
   className?: string;
+  loopDelay?: number;
+  loop?: boolean;
 }
-class Swiper extends PureComponent<SwiperProps, any> {
+interface SwiperState {
+  offset: number;
+  scale: number;
+}
+class Swiper extends PureComponent<SwiperProps, SwiperState> {
   swiperEle = React.createRef<HTMLDivElement>();
+  state = { offset: 0, scale: 1 };
+  // 记录开始时和移动时的坐标信息
   startPoint: TouchInfo = {
     pos: 0,
     timeStamp: 0
   };
+
   movePoint: TouchInfo = {
     pos: 0,
     timeStamp: 0
   };
-
+  // 计算时需要依赖上次移动的距离和上次计算的缩放值，需要保存
   prevOffset: number = 0;
   prevScale: number = 1;
-  state = { offset: 0, scale: 1 };
+  // swiper的宽度
   swiperWidth: number = 0;
+  // timer
   animateTimer: number = 0;
+  autoPlayTimer: number = 0;
+  // 当前的index
   currentIndex: number = 0;
+  // 共有几个轮播图
   sliderCount: number = 0;
+  // 自动播放
+  componentDidMount() {
+    this.autoPlay();
+  }
+
   onTouchStart = ({ touches, timeStamp }: React.TouchEvent) => {
+    // 保存开始时的信息
     const { pageX: pos } = touches[0];
     this.startPoint = { pos, timeStamp };
+    // 计算父级宽度，因为在componentDidMount中得到的宽度有误
     this.swiperWidth = this.swiperEle.current!.getBoundingClientRect().width;
+    // 用偏移量/宽度就知道当前的index
+    // 因为组件设计是偏移量过半就跳到下张图，所以用四舍五入
     this.currentIndex = Math.round(this.state.offset / this.swiperWidth);
+    // 清除所有的timer
     if (this.animateTimer) cancelAnimationFrame(this.animateTimer);
+    if (this.autoPlayTimer) clearInterval(this.autoPlayTimer);
   };
   onTouchMove = ({ touches, timeStamp }: React.TouchEvent) => {
+    // 保存移动时的信息
     const { pageX: pos } = touches[0];
     this.movePoint = { pos, timeStamp };
+    // 计算偏移量和缩放值
+    // 当前结果需要加上保存的上一次的计算结果
     const distance = this.movePoint.pos - this.startPoint.pos;
     const offset = this.prevOffset + distance;
     const scale = this.prevScale - Math.abs(distance) / this.swiperWidth / 2;
@@ -90,9 +117,25 @@ class Swiper extends PureComponent<SwiperProps, any> {
     }
     this.animate(this.currentIndex);
   };
+  autoPlay = () => {
+    const { loopDelay = 5, loop } = this.props;
+    if (!loop) return;
+    this.autoPlayTimer = window.setInterval(() => {
+      this.currentIndex--;
+      if (this.currentIndex === -this.sliderCount - 1) {
+        this.currentIndex = -1;
+        this.prevOffset = 0;
+        this.setState({ offset: 0 }, () => this.animate(this.currentIndex));
+        return;
+      }
+      this.animate(this.currentIndex);
+    }, loopDelay * 1000);
+  };
   animate = (index: number) => {
     const { animateTime = 0.15 } = this.props;
     let lastTimeStamp = 0;
+    if (!this.swiperWidth)
+      this.swiperWidth = this.swiperEle.current!.getBoundingClientRect().width;
     const animateCallBack = (timeStamp: number) => {
       if (!lastTimeStamp) lastTimeStamp = timeStamp;
       const distance = index * this.swiperWidth - this.state.offset;
@@ -101,6 +144,8 @@ class Swiper extends PureComponent<SwiperProps, any> {
       const scaleSpeed = (1 - this.prevScale) / animateTime;
       if (Math.abs(moveSpeed) < 0.0001) {
         if (this.animateTimer) cancelAnimationFrame(this.animateTimer);
+        if (this.autoPlayTimer) clearInterval(this.autoPlayTimer);
+        this.autoPlay();
         return;
       }
       this.setState(
@@ -127,17 +172,14 @@ class Swiper extends PureComponent<SwiperProps, any> {
     const cloneChildren = React.Children.map(children, (child: any, index) => {
       if (index === this.sliderCount - 1) {
         tempNodeL1 = React.cloneElement(child, {
-          offset: -1,
           scale
         });
       } else if (index === 0) {
         tempNodeR1 = React.cloneElement(child, {
-          offset: this.sliderCount,
           scale
         });
       }
       return React.cloneElement(child, {
-        offset: index,
         scale
       });
     });
@@ -162,7 +204,8 @@ class Swiper extends PureComponent<SwiperProps, any> {
         <div
           className={styles.animate}
           style={{
-            transform: `translate3d(${offset}px,0,0)`
+            transform: `translate3d(${offset}px,0,0)`,
+            left: '-100%'
           }}
         >
           {this.renderSlider()}

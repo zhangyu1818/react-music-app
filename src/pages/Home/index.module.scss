@@ -1,5 +1,8 @@
 @import '../../scss/utils';
 .banner {
+  width: 92vw;
+  margin: auto;
+  border-radius: rem(6);
   .bannerImg {
     background-size: cover;
     background-repeat: no-repeat;
