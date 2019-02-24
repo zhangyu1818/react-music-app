@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PlayList from './PlayList';
 import styles from './index.module.scss';
-const PlayListWrapper = () => {
+const PlayListWrapper = (props: any) => {
   const [state, setState] = useState({ picUrl: '', scale: 1 });
   return (
     <div className={styles.playListWrapper}>
@@ -15,7 +15,7 @@ const PlayListWrapper = () => {
           alt=''
         />
       </div>
-      <PlayList onChange={setState} />
+      <PlayList onChange={setState} {...props} />
     </div>
   );
 };

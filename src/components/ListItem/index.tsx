@@ -7,11 +7,17 @@ interface ListItemProps {
   picUrl: string;
   title: string;
   showCount?: boolean;
+  onTouch?: () => void;
 }
 const ListItem = memo((props: ListItemProps) => (
-  <div className={classNames(styles.listItem, props.className)}>
+  <div
+    onTouchStart={props.onTouch ? props.onTouch : undefined}
+    className={classNames(styles.listItem, props.className)}
+  >
     <div className={styles.imgWrapper}>
-      {props.showCount ? <span className={styles.playCount}>{props.playCount}</span> : null}
+      {props.showCount ? (
+        <span className={styles.playCount}>{props.playCount}</span>
+      ) : null}
       <img className={styles.img} src={props.picUrl} alt='' />
     </div>
     <h2 className={styles.title}>{props.title}</h2>

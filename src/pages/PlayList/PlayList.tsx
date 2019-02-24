@@ -26,8 +26,11 @@ class PlayList extends PureComponent<PlayListProps, PlayListState> {
     }
   };
   componentDidMount() {
-    const { onChange } = this.props;
-    fetch('/playlist/detail?id=2323877217')
+    const {
+      onChange,
+      location: { state }
+    } = this.props;
+    fetch(`/playlist/detail?id=${state.id}`)
       .then((res) => res.json())
       .then(({ playlist }) => {
         console.log(playlist);

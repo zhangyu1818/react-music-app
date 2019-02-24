@@ -49,6 +49,10 @@ class Swiper extends PureComponent<SwiperProps, SwiperState> {
   componentDidMount() {
     this.autoPlay();
   }
+  componentWillUnmount() {
+    clearInterval(this.autoPlayTimer);
+    cancelAnimationFrame(this.animateTimer);
+  }
 
   onTouchStart = ({ touches, timeStamp }: React.TouchEvent) => {
     // 保存开始时的信息

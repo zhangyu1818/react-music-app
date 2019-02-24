@@ -22,7 +22,7 @@ const App = () => {
       <h1 className='app-title'>MUSIC</h1>
       <Router>
         <>
-          <Route path='/' exact component={PlayList} />
+          <Route path='/'  component={Home} />
           <Route path='/playList' exact component={PlayList} />
         </>
       </Router>

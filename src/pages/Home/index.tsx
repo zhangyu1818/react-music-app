@@ -7,8 +7,10 @@ interface Banner {
   imageUrl: string;
   [propName: string]: any;
 }
-
-const Home = () => {
+interface HomeProps {
+  history: any;
+}
+const Home = (props: HomeProps) => {
   const [banners, setBanners] = useState([]);
   const [recommend, setRecommend] = useState([]);
   const [newSong, setNewSong] = useState([]);
@@ -23,6 +25,9 @@ const Home = () => {
       .then((res) => res.json())
       .then(({ result }) => setNewSong(result.slice(0, 6)));
   }, []);
+  const onTouchPlayList = (item: any) => {
+    props.history.push('/playList', item);
+  };
   return (
     <>
       <div className={styles.bannerWrapper}>
@@ -42,6 +47,9 @@ const Home = () => {
         <div className={styles.recommendList}>
           {recommend.map((item: any) => (
             <ListItem
+              onTouch={() => {
+                onTouchPlayList(item);
+              }}
               key={item.id}
               playCount={item.playCount}
               picUrl={item.picUrl}
