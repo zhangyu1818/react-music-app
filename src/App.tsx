@@ -4,7 +4,7 @@ import Player from './pages/Player';
 import { initialState, reducer } from './reducer';
 import Context from './context';
 import Home from './pages/Home';
-import Search from './pages/Search';
+import PlayList from './pages/PlayList';
 import { CHANGE_CURRENT_SONG } from './reducer/actionType';
 import { fetchSong } from './utils/song';
 
@@ -22,8 +22,8 @@ const App = () => {
       <h1 className='app-title'>MUSIC</h1>
       <Router>
         <>
-          <Route path='/' exact component={Home} />
-          <Route path='/search' exact component={Search} />
+          <Route path='/' exact component={PlayList} />
+          <Route path='/playList' exact component={PlayList} />
         </>
       </Router>
       {/*<Player />*/}

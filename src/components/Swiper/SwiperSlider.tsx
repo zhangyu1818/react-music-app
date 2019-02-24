@@ -19,9 +19,12 @@ class SwiperSlider extends PureComponent<SwiperSliderProps, any> {
           className={styles.swiperImg}
           style={{
             transform: `scale(${scale})`,
-            boxShadow: `0 ${62.5 * shadow}px ${125 * shadow}px ${-25 *
-              shadow}px rgba(50, 50, 73, 0.5), 0 ${37.5 * shadow}px ${75 *
-              shadow}px ${-37.5 * shadow}px rgba(0, 0, 0, 0.6)`
+            boxShadow:
+              scale !== 1
+                ? `0 ${52.5 * shadow}px ${115 * shadow}px ${-15 *
+                    shadow}px rgba(50, 50, 73, 0.5), 0 ${27.5 * shadow}px ${65 *
+                    shadow}px ${-27.5 * shadow}px rgba(0, 0, 0, 0.6)`
+                : ''
           }}
         >
           {children}

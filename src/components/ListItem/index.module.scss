@@ -1,0 +1,29 @@
+@import '../../scss/utils';
+@import '../../scss/variables';
+.listItem {
+  width: 100%;
+  height: 100%;
+  font-size: 0;
+  .imgWrapper {
+    font-size: 0;
+    .playCount {
+      font-size: rem(10);
+    }
+    .img {
+      width: 100%;
+      border-radius: rem(4);
+    }
+  }
+  .title {
+    margin: rem(4);
+    font-size: rem(10);
+    font-weight: normal;
+    color: $fontColor;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* autoprefixer: off */
+    -webkit-box-orient: vertical;
+  }
+}

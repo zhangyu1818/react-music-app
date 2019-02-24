@@ -1,5 +1,4 @@
 // 用于捕获时间戳的正则
-import { findIndex } from 'lodash-es';
 
 const timeExp = /\[(\d{2,}):(\d{2})(?:\.(\d{2,3}))?]/g;
 

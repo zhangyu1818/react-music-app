@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import styles from './tabs.module.scss';
 import classNames from 'classnames';
-import { clamp } from 'lodash-es';
+import { clamp } from 'lodash';
 interface TabsProp {
   className?: string;
   switchOffset?: number;

@@ -19,4 +19,26 @@
       }
     }
   }
+  .swiperPagination {
+    position: absolute;
+    font-size: 0;
+    width: 100%;
+    left: 0;
+    bottom: rem(6.8);
+    text-align: center;
+    .dot {
+      &+.dot{
+        margin-left: rem(6);
+      }
+      &.current{
+        background: rgba(#666,0.7);
+      }
+      display: inline-block;
+      width: rem(5.5);
+      height: rem(5.5);
+      background: #000;
+      border-radius: 50%;
+      background: rgba(#bbb,0.6);
+    }
+  }
 }

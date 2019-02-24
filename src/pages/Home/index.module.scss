@@ -1,13 +1,28 @@
 @import '../../scss/utils';
-.banner {
-  width: 92vw;
+.bannerWrapper {
+  padding-top: rem(10);
+  background: linear-gradient(to bottom, $mainColor 70%, #fff 0, #fff);
+  .banner {
+    width: rem(350);
+    margin: auto;
+    border-radius: rem(6);
+    .bannerImg {
+      background-size: cover;
+      background-repeat: no-repeat;
+      width: 100%;
+      height: 0;
+      padding-bottom: 37%;
+    }
+  }
+}
+.recommend {
   margin: auto;
-  border-radius: rem(6);
-  .bannerImg {
-    background-size: cover;
-    background-repeat: no-repeat;
-    width: 100%;
-    height: 0;
-    padding-bottom: 37%;
+  width: rem(350);
+  .recommendList {
+    display: grid;
+    grid-template-columns: rem(110) rem(110) rem(110);
+    grid-template-rows: 1fr 1fr;
+    grid-column-gap: rem(10);
+    grid-row-gap: rem(6);
   }
 }
