@@ -7,14 +7,15 @@
   right: 0;
   left: 0;
   font-size: 0;
+  z-index: 1;
   background: #fff;
   .bgImg {
     position: absolute;
     top: 0;
-    right: 0;
     left: 0;
-    bottom: 0;
     z-index: 1;
+    transform-origin: top;
+    will-change: transform;
     &:before {
       content: '';
       position: absolute;
@@ -22,19 +23,13 @@
       bottom: 0;
       right: 0;
       left: 0;
-      background: linear-gradient(
-        rgba(#000, 0.6) 0,
-        rgba(#000, 0.6) 90%,
-        #fff 0
-      );
+      background: linear-gradient(rgba(#000, 0.6) 0, rgba(#000, 0.6) 0);
     }
     .img {
       position: relative;
       z-index: -1;
       width: rem(375);
       height: rem(375);
-      transform-origin: top;
-      will-change: transform;
     }
   }
   .playList {
@@ -47,11 +42,39 @@
     background-position: top center;
     background-repeat: no-repeat;
     .header {
-      position: absolute;
-      background: transparent;
-      height: rem(60);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      height: rem(50);
       width: 100%;
-      .sticky {
+      display: flex;
+      align-items: center;
+      .headerBackIcon {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        width: rem(50);
+        height: rem(50);
+        font-size: rem(30);
+      }
+      .headerNameWrapper {
+        opacity: 0;
+        .headerName {
+          color: #fff;
+          padding: 0 rem(20);
+          font-size: rem(14);
+        }
+      }
+      .headerBg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: -1;
+        opacity: 0;
         background: $mainColor;
       }
     }
@@ -70,6 +93,7 @@
           float: left;
           border-radius: rem(6);
           width: rem(130);
+          height: rem(130);
           margin-right: rem(20);
           background: linear-gradient(
             rgba(0, 0, 0, 0.6) 0,
@@ -130,15 +154,41 @@
         border-top-left-radius: rem(12);
         border-top-right-radius: rem(12);
         position: relative;
-        top: rem(-10);
         background: #fff;
+        .playAll {
+          width: 100%;
+          padding: rem(14) rem(25);
+          position: relative;
+          &:before {
+            content: '';
+            position: absolute;
+            left: rem(14);
+            right: rem(14);
+            bottom: 0;
+            border-bottom: 1px solid rgba($fontColor, 0.1);
+            transform: scaleY(0.4);
+          }
+          .playButton {
+            background: $secondaryColor;
+            color: $mainColor;
+            border: none;
+            outline: none;
+            padding: rem(5) rem(7);
+            border-radius: rem(4);
+            font-size: rem(14);
+            margin-right: rem(8);
+          }
+          .total {
+            font-size: rem(12);
+            color: rgba($fontColor, 0.8);
+          }
+        }
       }
     }
   }
 }
 .listItem {
   width: 100%;
-  color: #000000;
   font-size: 0;
   padding: rem(10) 0 rem(10) 0;
   overflow: hidden;
@@ -146,6 +196,7 @@
     float: left;
     display: inline-flex;
     width: rem(50);
+    height: rem(36);
     font-size: rem(16);
     justify-content: center;
     align-items: center;
@@ -159,7 +210,7 @@
     &:after {
       content: '';
       position: absolute;
-      right: 0;
+      right: rem(10);
       bottom: rem(-10);
       width: 100%;
       border-bottom: 1px solid rgba($fontColor, 0.1);

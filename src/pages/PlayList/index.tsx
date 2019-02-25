@@ -5,15 +5,13 @@ const PlayListWrapper = (props: any) => {
   const [state, setState] = useState({ picUrl: '', scale: 1 });
   return (
     <div className={styles.playListWrapper}>
-      <div className={styles.bgImg}>
-        <img
-          className={styles.img}
-          src={state.picUrl}
-          style={{
-            transform: `scale(${state.scale})`
-          }}
-          alt=''
-        />
+      <div
+        className={styles.bgImg}
+        style={{
+          transform: `scale(${state.scale})`
+        }}
+      >
+        <img className={styles.img} src={state.picUrl} alt='' />
       </div>
       <PlayList onChange={setState} {...props} />
     </div>

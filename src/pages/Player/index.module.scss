@@ -1,24 +1,42 @@
 @import '../../scss/utils';
 $Left: 45;
 .playerWrapper {
+  &.show {
+    transform: translateY(-100%);
+  }
   position: fixed;
-  top: 0;
-  bottom: 0;
+  height: 100vh;
+  bottom: -100%;
   left: 0;
   right: 0;
   background: $secondaryColor;
+  z-index: 2;
+  transition: transform 0.4s;
+  will-change: transform;
+  font-size: 0;
+  overflow: hidden;
   .topBar {
-    position: absolute;
-    left: 0;
-    top: 0;
+    font-size: 0;
     width: 100%;
     height: rem(50);
+    .back {
+      float: right;
+      width: rem(50);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: rem(20);
+      .icon {
+        color: $mainColor;
+        font-size: rem(28);
+      }
+    }
   }
   .controllerGroup {
     font-size: 0;
-    position: absolute;
-    left: rem($Left);
-    bottom: rem(560);
+    margin-left: rem($Left);
+    margin-top: rem(36);
     .button {
       & + .button {
         margin-left: rem(30);
@@ -29,25 +47,23 @@ $Left: 45;
     }
   }
   .tabs {
-    position: absolute;
-    left: 0;
-    bottom: rem(340);
+    padding-top: rem(40);
+    padding-bottom: rem(45);
     .lyric {
       width: rem(318);
-      height: rem(170);
       position: relative;
       margin-left: rem($Left);
     }
     .album {
       position: relative;
       margin-left: rem($Left);
-      padding: 0 rem(45);
+      padding: 0 rem(45) 0 0;
       font-size: 0;
-      width: rem(240);
-      background: url('../../assets/images/picBG.png') right/rem(165) no-repeat;
+      width: rem(210);
+      background: url('../../assets/images/picBG.png') rem(35) center/rem(165) no-repeat;
       &:before {
         position: absolute;
-        left: rem(70);
+        left: rem(28);
         bottom: rem(-48);
         z-index: -1;
         transform-style: preserve-3d;
@@ -57,7 +73,7 @@ $Left: 45;
         transform: perspective(rem(500)) rotateX(70deg) rotateZ(30deg);
         display: block;
         border-radius: 50%;
-        box-shadow: -80px 20px 60px 0 rgba(0, 0, 0, 0.5);
+        box-shadow: -80px 20px 60px 0 rgba(0, 0, 0, 0.35);
       }
       &:after {
         position: absolute;
@@ -71,7 +87,7 @@ $Left: 45;
         transform: perspective(rem(500)) rotateX(70deg) rotateZ(-20deg);
         display: block;
         border-radius: 50%;
-        box-shadow: 80px 20px 50px 0 rgba(0, 0, 0, 0.4);
+        box-shadow: 80px 20px 50px 0 rgba(0, 0, 0, 0.35);
       }
       .pic {
         width: rem(165);
@@ -83,9 +99,8 @@ $Left: 45;
     }
   }
   .buttonGroup {
-    position: absolute;
-    bottom: rem(260);
-    left: rem($Left);
+    margin-left: rem($Left);
+    margin-bottom: rem(42);
     background: lighten($mainColor, 7%);
     font-size: 0;
     border: 2px solid $mainColor;
@@ -109,26 +124,27 @@ $Left: 45;
     }
   }
   .songInfo {
-    position: absolute;
-    left: rem($Left);
-    bottom: rem(150);
+    margin-left: rem($Left);
+    margin-top: rem(40);
+    height: rem(55);
     color: $mainColor;
     .name {
       margin: 0 0 rem(16);
       font-size: rem(18);
       font-weight: bolder;
+      padding-right: rem(10);
     }
     .singerName {
       margin: 0;
       font-size: rem(12);
+      padding-right: rem(10);
     }
   }
   .timeline {
-    position: absolute;
+    text-align: right;
+    margin-right: rem(16);
     font-size: rem(12);
     color: $mainColor;
-    right: rem(16);
-    bottom: rem(48);
   }
   .backgroundProgress {
     position: absolute;
@@ -142,8 +158,7 @@ $Left: 45;
     pointer-events: none;
   }
   .progress {
-    position: absolute;
-    bottom: rem(84);
-    left: rem($Left);
+    margin-left: rem($Left);
+    margin-top: rem(40);
   }
 }

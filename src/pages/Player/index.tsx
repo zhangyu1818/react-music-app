@@ -1,12 +1,20 @@
-import React, { useContext, useRef, useState, useEffect } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import Context from '../../context';
 
 import ProgressBar from '../../components/Progress';
 import Lyric from '../../components/Lyric';
 import styles from './index.module.scss';
-import { CHANGE_PLAY_STATE } from '../../reducer/actionType';
+import {
+  CHANGE_CURRENT_SONG,
+  CHANGE_PLAY_STATE,
+  CHANGE_PLAYER_SIZE,
+  NEXT_SONG,
+  SHOW_PLAYER
+} from '../../reducer/actionType';
 import Tabs, { TabPane } from '../../components/Tabs';
+import { fetchSong } from '../../utils/song';
+import { playerSizeType } from '../../utils/types';
 
 /**
  * 格式化时间
@@ -21,7 +29,7 @@ const formatTime = (time: number) => {
 const Player = () => {
   // context
   const {
-    state: { current, isPlay },
+    state: { current, isPlay, currentId, showPlayer, playerSize },
     dispatch
   } = useContext(Context);
   // 进度
@@ -31,6 +39,10 @@ const Player = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   // 播放时间
   const [timeline, setTimeline] = useState('0:00 / 0:00');
+  // 缩小
+  const zoomOut = () => {
+    dispatch({ type: CHANGE_PLAYER_SIZE, size: playerSizeType.mini });
+  };
   // 当audio标签可以播放时触发事件
   const onCanPlay = () => {
     if (!audioRef.current) return;
@@ -48,6 +60,10 @@ const Player = () => {
     setPercent(isNaN(temp) ? 0 : temp);
     refreshTimeline();
   };
+  // 播放完
+  const onEnd = () => {
+    dispatch({ type: NEXT_SONG });
+  };
   // 当进度条改变时触发的事件
   const onProgressChange = (percent: number) => {
     (audioRef.current as HTMLAudioElement).currentTime =
@@ -57,7 +73,6 @@ const Player = () => {
   // 手动改变进度条传入进度给歌词
   const lyricChange = (): undefined | number => {
     if (!dragProgress) return;
-    const tempState = dragProgress;
     setDragProgress(false);
     return audioRef.current
       ? (audioRef.current as HTMLAudioElement).currentTime
@@ -76,14 +91,37 @@ const Player = () => {
     isPlay ? audioRef.current.pause() : audioRef.current.play();
     dispatch({ type: CHANGE_PLAY_STATE, isPlay: !isPlay });
   };
+  const nextSong = () => {
+    dispatch({ type: NEXT_SONG });
+  };
+  useEffect(
+    () => {
+      if (currentId !== undefined) {
+        !showPlayer && dispatch({ type: SHOW_PLAYER });
+        fetchSong(currentId).then((current) => {
+          console.log(current);
+          dispatch({ type: CHANGE_CURRENT_SONG, payload: current });
+        });
+      }
+    },
+    [currentId]
+  );
   return (
-    <div className={styles.playerWrapper}>
+    <div
+      className={classNames(styles.playerWrapper, {
+        [styles.show]: showPlayer && playerSize === playerSizeType.normal
+      })}
+    >
       {/*背景进度条*/}
       <div
         className={styles.backgroundProgress}
         style={{ transform: `translate3d(${percent}%,0,0)` }}
       />
-      <div className={styles.topBar} />
+      <div className={styles.topBar}>
+        <div className={styles.back} onClick={zoomOut}>
+          <i className={classNames('iconfont', styles.icon)}>&#xe600;</i>
+        </div>
+      </div>
       <div className={styles.controllerGroup}>
         <button className={styles.button}>
           <i className='iconfont'>&#xe624;</i>
@@ -120,7 +158,7 @@ const Player = () => {
             <i className='iconfont'>&#xe770;</i>
           )}
         </button>
-        <button className={styles.button}>
+        <button className={styles.button} onClick={nextSong}>
           <i className='iconfont'>&#xe76d;</i>
         </button>
       </div>
@@ -142,6 +180,7 @@ const Player = () => {
         ref={audioRef}
         onCanPlay={onCanPlay}
         onTimeUpdate={onAudioPlay}
+        onEnded={onEnd}
       />
     </div>
   );

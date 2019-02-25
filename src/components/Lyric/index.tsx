@@ -47,7 +47,7 @@ class Lyric extends PureComponent<any, LyricState> {
     }
     if (state.current.id && state.current.id !== this.songId) {
       this.lyricControl && this.lyricControl.stop();
-      this.lyricStr = state.current.lyric;
+      this.lyricStr = state.current.lyric || '';
       this.songId = state.current.id;
       this.lyricControl = new LyricParser(
         this.lyricStr,
@@ -96,6 +96,11 @@ class Lyric extends PureComponent<any, LyricState> {
               {txt}
             </p>
           ))}
+          {lyricLines.length === 0 ? (
+            <p className={classNames(styles.line, styles.currentLine)}>
+              暂无歌词
+            </p>
+          ) : null}
         </div>
       </div>
     );

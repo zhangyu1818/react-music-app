@@ -3,6 +3,10 @@ import styles from './index.module.scss';
 import classNames from 'classnames';
 import BScroll from 'better-scroll';
 import PlayListItem, { PlayListItemProps } from './PlayListItem';
+import { Link } from 'react-router-dom';
+import { clamp } from 'lodash';
+import Context from '../../context';
+import { CHANGE_PLAY_LIST } from '../../reducer/actionType';
 interface PlayListState {
   [propName: string]: any;
 }
@@ -11,9 +15,11 @@ interface PlayListProps {
   [propName: string]: any;
 }
 class PlayList extends PureComponent<PlayListProps, PlayListState> {
+  static contextType = Context;
   scrollEle = createRef<HTMLDivElement>();
   scrollController: BScroll | undefined;
   state = {
+    opacity: 0,
     playList: {
       coverImgUrl: '',
       playCount: 0,
@@ -28,8 +34,13 @@ class PlayList extends PureComponent<PlayListProps, PlayListState> {
   componentDidMount() {
     const {
       onChange,
-      location: { state }
+      location: { state },
+      history
     } = this.props;
+    if (!state) {
+      history.push('/');
+      return;
+    }
     fetch(`/playlist/detail?id=${state.id}`)
       .then((res) => res.json())
       .then(({ playlist }) => {
@@ -45,12 +56,7 @@ class PlayList extends PureComponent<PlayListProps, PlayListState> {
     if (this.scrollEle.current) {
       this.scrollController = new BScroll(this.scrollEle.current, {
         probeType: 3,
-        bounce: {
-          top: true,
-          bottom: false,
-          left: false,
-          right: false
-        }
+        click: true
       });
       this.scrollController.on('scroll', ({ y }) => {
         if (y > 0) {
@@ -60,15 +66,35 @@ class PlayList extends PureComponent<PlayListProps, PlayListState> {
               scale: 1 + y / 700
             });
         }
+        this.setState(() => ({ opacity: clamp(-y / 200, 0, 1) }));
       });
     }
   }
-
+  playAll = () => {
+    const { dispatch } = this.context;
+    dispatch({
+      type: CHANGE_PLAY_LIST,
+      playList: this.state.playList.tracks
+    });
+  };
   render() {
-    const { playList } = this.state;
+    const { playList, opacity } = this.state;
     return (
       <div className={styles.playList}>
-        <div className={styles.header} />
+        <div className={styles.header}>
+          <Link to='/'>
+            <i className={classNames('iconfont', styles.headerBackIcon)}>
+              &#xe64b;
+            </i>
+          </Link>
+          <div
+            className={styles.headerNameWrapper}
+            style={{ opacity: opacity }}
+          >
+            <p className={styles.headerName}>{playList.name}</p>
+          </div>
+          <div className={styles.headerBg} style={{ opacity: opacity }} />
+        </div>
         <div className={styles.scroll} ref={this.scrollEle}>
           <div style={{ willChange: 'transform' }}>
             <div className={styles.desc}>
@@ -103,6 +129,12 @@ class PlayList extends PureComponent<PlayListProps, PlayListState> {
               </div>
             </div>
             <div className={styles.list}>
+              <div className={styles.playAll}>
+                <button className={styles.playButton} onClick={this.playAll}>
+                  播放全部
+                </button>
+                <span className={styles.total}>{playList.tracks.length}首</span>
+              </div>
               {playList.tracks.map((track: PlayListItemProps, index) => (
                 <PlayListItem
                   key={track.id}

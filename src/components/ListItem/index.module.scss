@@ -1,8 +1,8 @@
 @import '../../scss/utils';
 @import '../../scss/variables';
 .listItem {
-  width: 100%;
-  height: 100%;
+  width: rem(110);
+  height: rem(147);
   font-size: 0;
   .imgWrapper {
     font-size: 0;
@@ -10,7 +10,8 @@
       font-size: rem(10);
     }
     .img {
-      width: 100%;
+      width: rem(110);
+      height: rem(110);
       border-radius: rem(4);
     }
   }
