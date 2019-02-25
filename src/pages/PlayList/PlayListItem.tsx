@@ -4,11 +4,12 @@ export interface PlayListItemProps {
   index: number;
   name: string;
   singer: string;
+  onClick: () => void;
   [propName: string]: any;
 }
 const PlayListItem = (props: PlayListItemProps) => {
   return (
-    <div className={styles.listItem}>
+    <div className={styles.listItem} onClick={props.onClick}>
       <span className={styles.index}>{props.index}</span>
       <div className={styles.itemInfo}>
         <h2 className={styles.itemName}>{props.name}</h2>

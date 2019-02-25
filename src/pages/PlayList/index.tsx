@@ -13,7 +13,7 @@ const PlayListWrapper = (props: any) => {
       >
         <img className={styles.img} src={state.picUrl} alt='' />
       </div>
-      <PlayList onChange={setState} {...props} />
+      <PlayList onChange={(value: any) => setState(value)} {...props} />
     </div>
   );
 };

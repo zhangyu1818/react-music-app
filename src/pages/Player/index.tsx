@@ -88,24 +88,24 @@ const Player = () => {
   // 切换播放状态
   const togglePlayState = () => {
     if (!audioRef.current) return;
-    isPlay ? audioRef.current.pause() : audioRef.current.play();
     dispatch({ type: CHANGE_PLAY_STATE, isPlay: !isPlay });
   };
   const nextSong = () => {
     dispatch({ type: NEXT_SONG });
   };
-  useEffect(
-    () => {
-      if (currentId !== undefined) {
-        !showPlayer && dispatch({ type: SHOW_PLAYER });
-        fetchSong(currentId).then((current) => {
-          console.log(current);
-          dispatch({ type: CHANGE_CURRENT_SONG, payload: current });
-        });
-      }
-    },
-    [currentId]
-  );
+  useEffect(() => {
+    if (currentId !== undefined) {
+      !showPlayer && dispatch({ type: SHOW_PLAYER });
+      fetchSong(currentId).then((current) => {
+        console.log(current);
+        dispatch({ type: CHANGE_CURRENT_SONG, payload: current });
+      });
+    }
+  }, [currentId]);
+  useEffect(() => {
+    if (!audioRef.current) return;
+    isPlay ? audioRef.current.play() : audioRef.current.pause();
+  }, [isPlay]);
   return (
     <div
       className={classNames(styles.playerWrapper, {

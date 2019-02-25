@@ -43,6 +43,7 @@ export interface Action {
   loopType?: loopType;
   playList?: any;
   size?: playerSizeType;
+  track?: any;
 }
 
 export const initialState: State = {
@@ -59,30 +60,32 @@ export const initialState: State = {
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     // 改变当前播放的音乐
-    case types.CHANGE_CURRENT_SONG:
+    case types.CHANGE_CURRENT_SONG: {
       if (action.payload === undefined) return state;
       return {
         ...state,
         current: action.payload
       };
+    }
     // 改变播放状态
-    case types.CHANGE_PLAY_STATE:
+    case types.CHANGE_PLAY_STATE: {
       if (action.isPlay === undefined) return state;
       return {
         ...state,
         isPlay: action.isPlay
       };
+    }
     // 改变循环播放
-    case types.CHANGE_LOOP_TYPE:
+    case types.CHANGE_LOOP_TYPE: {
       if (action.loopType === undefined) return state;
       return {
         ...state,
         loopType: action.loopType
       };
+    }
     // 改变播放列表
-    case types.CHANGE_PLAY_LIST:
+    case types.CHANGE_PLAY_LIST: {
       if (action.playList === undefined) return state;
-      console.log(action.playList);
       return {
         ...state,
         musicList: action.playList,
@@ -90,20 +93,55 @@ export const reducer = (state: State, action: Action): State => {
         currentId: action.playList[0].id,
         currentIndex: 0
       };
+    }
+    // 播放一首歌
+    case types.ADD_MUSIC: {
+      {
+        if (!action.track) return state;
+        const isHas = state.playList.findIndex(
+          (item) => item.id === action.track.id
+        );
+        if (~isHas) {
+          const currentId = action.track.id;
+          return {
+            ...state,
+            currentId,
+            currentIndex: isHas
+          };
+        }
+        const playList = [...state.playList];
+        playList.splice(state.currentIndex || 0, 0, action.track);
+        const musicList = [...state.playList];
+        const currentIndex =
+          musicList.findIndex((item) => item.id === state.currentId) + 1;
+        musicList.splice(currentIndex, 0, action.track);
+        const currentId = action.track.id;
+        return {
+          ...state,
+          playList,
+          musicList,
+          currentId,
+          currentIndex
+        };
+      }
+    }
     // 显示播放器
-    case types.SHOW_PLAYER:
+    case types.SHOW_PLAYER: {
       return {
         ...state,
         showPlayer: true
       };
-    case types.CHANGE_PLAYER_SIZE:
+    }
+    // 改变播放器大小
+    case types.CHANGE_PLAYER_SIZE: {
       if (action.size === undefined) return state;
       return {
         ...state,
         playerSize: action.size
       };
+    }
     // 上一首，下一首
-    case types.NEXT_SONG:
+    case types.NEXT_SONG: {
       const nextIndex =
         ((state.currentIndex || 0) + 1) % state.musicList.length;
       const nextSongId = state.playList[nextIndex].id;
@@ -112,6 +150,7 @@ export const reducer = (state: State, action: Action): State => {
         currentId: nextSongId,
         currentIndex: nextIndex
       };
+    }
     default:
       return state;
   }

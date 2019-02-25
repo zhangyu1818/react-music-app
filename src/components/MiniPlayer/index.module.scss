@@ -1,0 +1,40 @@
+@import '../../scss/utils';
+@import '../../scss/variables';
+.miniPlayer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: $mainColor;
+  height: rem(50);
+  z-index: 3;
+  display: flex;
+  .playControl {
+    width: rem(50);
+    height: rem(50);
+    margin-left: rem(20);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    i {
+      font-size: rem(32);
+      color: #fff;
+    }
+  }
+  .songInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p {
+      margin: 0;
+      color: $secondaryColor;
+    }
+    .name {
+      font-size: rem(16);
+      margin-right: rem(10);
+    }
+    .singer {
+      font-size: rem(12);
+    }
+  }
+}
