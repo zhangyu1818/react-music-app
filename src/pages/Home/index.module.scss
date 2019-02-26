@@ -7,6 +7,7 @@
   right: 0;
   overflow: hidden;
   margin-top: rem(60);
+  background: #ffffff;
   .bannerWrapper {
     height: rem(139);
     padding-top: rem(10);
@@ -28,12 +29,12 @@
     margin: auto;
     width: rem(350);
     .recommendList {
-      height: rem(300);
+      height: rem(315);
       display: grid;
       grid-template-columns: rem(110) rem(110) rem(110);
       grid-template-rows: 1fr 1fr;
       grid-column-gap: rem(10);
-      grid-row-gap: rem(6);
+      grid-row-gap: rem(20);
     }
   }
 }

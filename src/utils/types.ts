@@ -1,4 +1,4 @@
-enum loopType {
+enum loopTypes {
   loop,
   order,
   shuffle
@@ -7,4 +7,4 @@ enum playerSizeType {
   normal,
   mini
 }
-export { loopType, playerSizeType };
+export { loopTypes, playerSizeType };

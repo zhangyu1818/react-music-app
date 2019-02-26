@@ -41,10 +41,6 @@ class Lyric extends PureComponent<any, LyricState> {
   componentDidUpdate() {
     const { state } = this.context;
     const { progressChange } = this.props;
-    const currentTime = progressChange();
-    if (currentTime && this.lyricControl) {
-      this.lyricControl.seek(currentTime * 1000);
-    }
     if (state.current.id && state.current.id !== this.songId) {
       this.lyricControl && this.lyricControl.stop();
       this.lyricStr = state.current.lyric || '';
@@ -68,14 +64,23 @@ class Lyric extends PureComponent<any, LyricState> {
         }
       );
       this.setState({
-        lyricLines: this.lyricControl.lines
+        lyricLines: this.lyricControl.lines,
+        currentLine: 0
       });
       this.linesEle = [];
-      if (this.bScroll) this.bScroll.refresh();
+      this.lyricControl.play();
+      if (this.bScroll) {
+        this.bScroll.scrollTo(0, 0);
+        this.bScroll.refresh();
+      }
     }
     if (state.isPlay !== this.isPlay && this.lyricControl) {
       this.isPlay = state.isPlay;
       this.isPlay ? this.lyricControl.continue() : this.lyricControl.pause();
+    }
+    const currentTime = progressChange();
+    if (currentTime !== undefined && this.lyricControl) {
+      this.lyricControl.seek(currentTime * 1000);
     }
   }
 
@@ -84,23 +89,25 @@ class Lyric extends PureComponent<any, LyricState> {
     return (
       <div className={styles.lyricWrapper} ref={this.scrollRef}>
         <div className={styles.lyricScroll}>
-          {lyricLines.map(({ txt, time }, index) => (
-            <p
-              className={classNames(
-                styles.line,
-                currentLine === index ? styles.currentLine : null
-              )}
-              data-lines={index}
-              key={time}
-            >
-              {txt}
-            </p>
-          ))}
-          {lyricLines.length === 0 ? (
-            <p className={classNames(styles.line, styles.currentLine)}>
-              暂无歌词
-            </p>
-          ) : null}
+          <div>
+            {lyricLines.map(({ txt, time }, index) => (
+              <p
+                className={classNames(
+                  styles.line,
+                  currentLine === index ? styles.currentLine : null
+                )}
+                data-lines={index}
+                key={time}
+              >
+                {txt}
+              </p>
+            ))}
+            {lyricLines.length === 0 ? (
+              <p className={classNames(styles.line, styles.currentLine)}>
+                暂无歌词
+              </p>
+            ) : null}
+          </div>
         </div>
       </div>
     );

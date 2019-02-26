@@ -2,10 +2,10 @@
 $Left: 45;
 .playerWrapper {
   &.show {
-    transform: translateY(-100%);
+    transform: translate3d(0, -100%, 0);
   }
-  position: fixed;
-  height: 100vh;
+  position: absolute;
+  top: 100%;
   bottom: -100%;
   left: 0;
   right: 0;
@@ -61,7 +61,8 @@ $Left: 45;
       padding: 0 rem(45) 0 0;
       font-size: 0;
       width: rem(210);
-      background: url('../../assets/images/picBG.png') rem(35) center/rem(165) no-repeat;
+      background: url('../../assets/images/picBG.png') rem(35) center/rem(165)
+        no-repeat;
       &:before {
         position: absolute;
         left: rem(28);

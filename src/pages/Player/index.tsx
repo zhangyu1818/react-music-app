@@ -7,14 +7,16 @@ import Lyric from '../../components/Lyric';
 import styles from './index.module.scss';
 import {
   CHANGE_CURRENT_SONG,
+  CHANGE_LOOP_TYPE,
   CHANGE_PLAY_STATE,
   CHANGE_PLAYER_SIZE,
   NEXT_SONG,
+  PREV_SONG,
   SHOW_PLAYER
 } from '../../reducer/actionType';
 import Tabs, { TabPane } from '../../components/Tabs';
 import { fetchSong } from '../../utils/song';
-import { playerSizeType } from '../../utils/types';
+import { loopTypes, playerSizeType } from '../../utils/types';
 
 /**
  * 格式化时间
@@ -29,7 +31,7 @@ const formatTime = (time: number) => {
 const Player = () => {
   // context
   const {
-    state: { current, isPlay, currentId, showPlayer, playerSize },
+    state: { current, isPlay, currentId, showPlayer, playerSize, loopType },
     dispatch
   } = useContext(Context);
   // 进度
@@ -93,19 +95,31 @@ const Player = () => {
   const nextSong = () => {
     dispatch({ type: NEXT_SONG });
   };
-  useEffect(() => {
-    if (currentId !== undefined) {
-      !showPlayer && dispatch({ type: SHOW_PLAYER });
-      fetchSong(currentId).then((current) => {
-        console.log(current);
-        dispatch({ type: CHANGE_CURRENT_SONG, payload: current });
-      });
-    }
-  }, [currentId]);
-  useEffect(() => {
-    if (!audioRef.current) return;
-    isPlay ? audioRef.current.play() : audioRef.current.pause();
-  }, [isPlay]);
+  const prevSong = () => {
+    dispatch({ type: PREV_SONG });
+  };
+  const toggleLoopType = () => {
+    dispatch({ type: CHANGE_LOOP_TYPE, loopType: (loopType + 1) % 3 });
+  };
+  useEffect(
+    () => {
+      if (currentId !== undefined) {
+        !showPlayer && dispatch({ type: SHOW_PLAYER });
+        fetchSong(currentId).then((current) => {
+          console.log(current);
+          dispatch({ type: CHANGE_CURRENT_SONG, payload: current });
+        });
+      }
+    },
+    [currentId]
+  );
+  useEffect(
+    () => {
+      if (!audioRef.current) return;
+      isPlay ? audioRef.current.play() : audioRef.current.pause();
+    },
+    [isPlay]
+  );
   return (
     <div
       className={classNames(styles.playerWrapper, {
@@ -126,8 +140,14 @@ const Player = () => {
         <button className={styles.button}>
           <i className='iconfont'>&#xe624;</i>
         </button>
-        <button className={styles.button}>
-          <i className='iconfont'>&#xe609;</i>
+        <button className={styles.button} onClick={toggleLoopType}>
+          {loopType === loopTypes.order ? (
+            <i className='iconfont'>&#xe609;</i>
+          ) : loopType === loopTypes.shuffle ? (
+            <i className='iconfont'>&#xe60a;</i>
+          ) : (
+            <i className='iconfont'>&#xe607;</i>
+          )}
         </button>
       </div>
       {/*歌曲封面*/}
@@ -145,7 +165,7 @@ const Player = () => {
       </Tabs>
       {/*歌曲控制组*/}
       <div className={styles.buttonGroup}>
-        <button className={styles.button}>
+        <button className={styles.button} onClick={prevSong}>
           <i className='iconfont'>&#xe76e;</i>
         </button>
         <button

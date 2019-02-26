@@ -2,11 +2,10 @@ import React, { memo } from 'react';
 import classNames from 'classnames';
 import styles from './index.module.scss';
 interface ListItemProps {
-  playCount: number;
+  playCount?: number;
   className?: string;
   picUrl: string;
   title: string;
-  showCount?: boolean;
   onClick?: () => void;
 }
 const ListItem = memo((props: ListItemProps) => (
@@ -15,8 +14,13 @@ const ListItem = memo((props: ListItemProps) => (
     className={classNames(styles.listItem, props.className)}
   >
     <div className={styles.imgWrapper}>
-      {props.showCount ? (
-        <span className={styles.playCount}>{props.playCount}</span>
+      {props.playCount ? (
+        <span className={styles.playCount}>
+          <i className='iconfont'>&#xe6c2;</i>
+          {props.playCount / 10000 > 1
+            ? ((props.playCount / 10000) | 0) + '万'
+            : props.playCount}
+        </span>
       ) : null}
       <img className={styles.img} src={props.picUrl} alt='' />
     </div>

@@ -1,5 +1,6 @@
 import * as types from './actionType';
-import { loopType, playerSizeType } from '../utils/types';
+import { loopTypes, playerSizeType } from '../utils/types';
+import { shuffle } from 'lodash';
 
 export interface Song {
   url: undefined;
@@ -11,6 +12,7 @@ export interface Song {
   singerName: undefined;
   lyric: undefined;
   translateLyric: undefined;
+
   [propName: string]: any;
 }
 
@@ -30,17 +32,18 @@ export interface State {
   currentId: number | undefined;
   currentIndex: number | undefined;
   isPlay: boolean;
-  loopType: loopType;
+  loopType: loopTypes;
   playList: Song[];
   musicList: Song[];
   playerSize: playerSizeType;
   showPlayer: boolean;
 }
+
 export interface Action {
   type: string;
   isPlay?: boolean;
   payload?: any;
-  loopType?: loopType;
+  loopType?: loopTypes;
   playList?: any;
   size?: playerSizeType;
   track?: any;
@@ -53,7 +56,7 @@ export const initialState: State = {
   musicList: [],
   playList: [],
   isPlay: false,
-  loopType: loopType.order,
+  loopType: loopTypes.order,
   playerSize: playerSizeType.normal,
   showPlayer: false
 };
@@ -78,8 +81,20 @@ export const reducer = (state: State, action: Action): State => {
     // 改变循环播放
     case types.CHANGE_LOOP_TYPE: {
       if (action.loopType === undefined) return state;
+      const playList =
+        action.loopType === loopTypes.shuffle &&
+        state.loopType !== loopTypes.shuffle
+          ? shuffle(state.musicList)
+          : action.loopType === loopTypes.order
+          ? state.musicList
+          : state.playList;
+      const currentIndex = playList.findIndex(
+        (value) => value.id === state.currentId
+      );
       return {
         ...state,
+        playList,
+        currentIndex,
         loopType: action.loopType
       };
     }
@@ -144,6 +159,17 @@ export const reducer = (state: State, action: Action): State => {
     case types.NEXT_SONG: {
       const nextIndex =
         ((state.currentIndex || 0) + 1) % state.musicList.length;
+      const nextSongId = state.playList[nextIndex].id;
+      return {
+        ...state,
+        currentId: nextSongId,
+        currentIndex: nextIndex
+      };
+    }
+    case types.PREV_SONG: {
+      const temp = (state.currentIndex || 0) - 1;
+      const nextIndex =
+        temp < 0 ? state.musicList.length - 1 : temp % state.musicList.length;
       const nextSongId = state.playList[nextIndex].id;
       return {
         ...state,

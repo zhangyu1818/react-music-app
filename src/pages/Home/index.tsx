@@ -24,14 +24,16 @@ const Home = (props: HomeProps) => {
     fetch('/personalized')
       .then((res) => res.json())
       .then(({ result }) => setRecommend(result.slice(0, 6)));
-    fetch('/personalized/newsong')
+    fetch('/album/newest')
       .then((res) => res.json())
-      .then(({ result }) => setNewSong(result.slice(0, 6)));
+      .then(({ albums }) => setNewSong(albums.slice(0, 6)));
     if (scrollEle.current) {
       scrollController.current = new BScroll(scrollEle.current, {
-        bounce: false,
         click: true
       });
+      return () => {
+        scrollController.current && scrollController.current.destroy();
+      };
     }
   }, []);
   return (
@@ -66,13 +68,15 @@ const Home = (props: HomeProps) => {
           </div>
         </div>
         <div className={styles.recommend}>
-          <Title title='最新音乐' />
+          <Title title='最新专辑' />
           <div className={styles.recommendList}>
             {newSong.map((item: any) => (
               <ListItem
+                onClick={() => {
+                  props.history.push('/album', item);
+                }}
                 key={item.id}
-                playCount={item.playCount}
-                picUrl={item.song.album.picUrl}
+                picUrl={item.blurPicUrl}
                 title={item.name}
               />
             ))}

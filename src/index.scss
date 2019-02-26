@@ -25,12 +25,17 @@ html {
   a {
     text-decoration: none;
   }
-  #root {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
+  #root > #content {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
     font-size: 0;
     overflow: hidden;
+    &.margin {
+      margin-bottom: rem(50);
+    }
   }
   .app-title {
     display: flex;

@@ -5,9 +5,18 @@
   height: rem(147);
   font-size: 0;
   .imgWrapper {
+    position: relative;
     font-size: 0;
     .playCount {
+      position: absolute;
+      color: #fff;
       font-size: rem(10);
+      top: rem(2);
+      right: rem(4);
+      i {
+        font-size: rem(9);
+        margin: rem(4);
+      }
     }
     .img {
       width: rem(110);
