@@ -9,10 +9,21 @@
   height: rem(50);
   z-index: 3;
   display: flex;
+  align-items: center;
+  .miniPic {
+    &.stop {
+      animation-play-state: paused;
+    }
+    border-radius: 50%;
+    width: rem(40);
+    height: rem(40);
+    margin-left: rem(20);
+    animation: rotate 20s linear infinite forwards;
+  }
   .playControl {
     width: rem(50);
     height: rem(50);
-    margin-left: rem(20);
+    margin-left: rem(10);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,11 +33,11 @@
     }
   }
   .songInfo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: rem(230);
+    overflow: hidden;
     p {
       margin: 0;
+      display: inline-block;
       color: $secondaryColor;
     }
     .name {
@@ -36,5 +47,10 @@
     .singer {
       font-size: rem(12);
     }
+  }
+}
+@keyframes rotate {
+  to {
+    transform: rotate(1turn);
   }
 }

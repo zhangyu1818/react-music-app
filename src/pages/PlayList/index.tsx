@@ -5,7 +5,7 @@ import BScroll from 'better-scroll';
 import PlayListItem from '../../components/PlayListItem';
 import { Link } from 'react-router-dom';
 import { clamp } from 'lodash';
-import Context from '../../context';
+import { useMyContext } from '../../context';
 import { ADD_MUSIC, CHANGE_PLAY_LIST } from '../../reducer/actionType';
 
 interface PlayListState {
@@ -17,7 +17,6 @@ interface PlayListState {
     nickname: string;
   };
   tracks: any[];
-  [propsName: string]: any;
 }
 interface PlayListProps {
   setBgImg?: Function;
@@ -34,7 +33,11 @@ const initialState: PlayListState = {
   tracks: []
 };
 const PlayList = (props: PlayListProps) => {
-  const { dispatch } = useContext(Context);
+  const { dispatch } = useMyContext({
+    playerSize() {
+      scrollController.current && scrollController.current.refresh();
+    }
+  });
   const headerBg = useRef<HTMLDivElement | null>(null);
   const bgImg = useRef<HTMLDivElement | null>(null);
   const scrollEle = useRef<HTMLDivElement | null>(null);
@@ -54,6 +57,7 @@ const PlayList = (props: PlayListProps) => {
         if (scrollEle.current) {
           scrollController.current = new BScroll(scrollEle.current, {
             probeType: 3,
+            observeDOM: false,
             click: true
           });
           scrollController.current.on('scroll', ({ y }) => {

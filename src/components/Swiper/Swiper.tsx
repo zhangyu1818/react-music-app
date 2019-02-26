@@ -48,16 +48,15 @@ class Swiper extends PureComponent<SwiperProps, SwiperState> {
   // 自动播放
   componentDidMount() {
     this.autoPlay();
-    document.addEventListener('visibilitychange', () => {
-      console.log(1);
-    });
   }
   componentWillUnmount() {
-    clearInterval(this.autoPlayTimer);
+    clearTimeout(this.autoPlayTimer);
     cancelAnimationFrame(this.animateTimer);
   }
 
-  onTouchStart = ({ touches, timeStamp }: React.TouchEvent) => {
+  onTouchStart = (event: React.TouchEvent) => {
+    event.stopPropagation();
+    const { touches, timeStamp } = event;
     // 保存开始时的信息
     const { pageX: pos } = touches[0];
     this.startPoint = { pos, timeStamp };
@@ -70,7 +69,9 @@ class Swiper extends PureComponent<SwiperProps, SwiperState> {
     if (this.animateTimer) cancelAnimationFrame(this.animateTimer);
     if (this.autoPlayTimer) clearInterval(this.autoPlayTimer);
   };
-  onTouchMove = ({ touches, timeStamp }: React.TouchEvent) => {
+  onTouchMove = (event: React.TouchEvent) => {
+    event.stopPropagation();
+    const { touches, timeStamp } = event;
     // 保存移动时的信息
     const { pageX: pos } = touches[0];
     this.movePoint = { pos, timeStamp };
@@ -85,7 +86,8 @@ class Swiper extends PureComponent<SwiperProps, SwiperState> {
     });
   };
 
-  onTouchEnd = () => {
+  onTouchEnd = (event: React.TouchEvent) => {
+    event.stopPropagation();
     // switchOffset是轮播切换的值，0.5代表拖拽过半就会换下张图
     // criticalSpeed是轮播切换的临界速度，如果速度大于0.4就会切换
     const { switchOffset = 0.5, criticalSpeed = 0.4 } = this.props;
@@ -140,7 +142,7 @@ class Swiper extends PureComponent<SwiperProps, SwiperState> {
   autoPlay = () => {
     const { delay = 5, autoplay } = this.props;
     if (!autoplay) return;
-    this.autoPlayTimer = window.setInterval(() => {
+    this.autoPlayTimer = window.setTimeout(() => {
       this.currentIndex--;
       if (this.currentIndex === -this.sliderCount - 1) {
         this.currentIndex = -1;
@@ -154,13 +156,13 @@ class Swiper extends PureComponent<SwiperProps, SwiperState> {
   // 动画
   animate = (index: number) => {
     const { animateTime = 0.15 } = this.props;
-    let lastTimeStamp = 0;
+    let lastTimeStamp = Date.now();
     // 由于是点击的时候才获取父级宽度，在自动播放的时候需要加个判断
     if (!this.swiperWidth)
       this.swiperWidth = this.swiperEle.current!.getBoundingClientRect().width;
     // requestAnimationFrame的callback
-    const animateCallBack = (timeStamp: number) => {
-      if (!lastTimeStamp) lastTimeStamp = timeStamp;
+    const animateCallBack = () => {
+      const timeStamp = Date.now();
       // 计算公式是速度*时间
       // 先计算出还需要走的距离
       const distance = index * this.swiperWidth - this.state.offset;
@@ -171,7 +173,7 @@ class Swiper extends PureComponent<SwiperProps, SwiperState> {
       // 动画完成后结束动画
       if (Math.abs(moveSpeed) < 0.0001) {
         if (this.animateTimer) cancelAnimationFrame(this.animateTimer);
-        if (this.autoPlayTimer) clearInterval(this.autoPlayTimer);
+        if (this.autoPlayTimer) clearTimeout(this.autoPlayTimer);
         this.autoPlay();
         return;
       }
@@ -189,7 +191,7 @@ class Swiper extends PureComponent<SwiperProps, SwiperState> {
         }
       );
     };
-    animateCallBack(0);
+    animateCallBack();
   };
   // render轮播slider
   // 无限滚动的原理是在轮播图前后各加两张假的图片

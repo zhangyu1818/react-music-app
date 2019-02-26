@@ -17,6 +17,7 @@ export interface Song {
 }
 
 export interface State {
+  [index: string]: any;
   current: {
     url: string | undefined;
     albumName: string | undefined;
@@ -106,7 +107,8 @@ export const reducer = (state: State, action: Action): State => {
         musicList: action.playList,
         playList: action.playList,
         currentId: action.playList[0].id,
-        currentIndex: 0
+        currentIndex: 0,
+        loopType: loopTypes.order
       };
     }
     // 播放一首歌

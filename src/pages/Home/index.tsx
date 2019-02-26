@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Swiper, { SwiperSlider } from '../../components/Swiper';
 import styles from './index.module.scss';
 import Title from '../../components/Title';
 import ListItem from '../../components/ListItem';
 import BScroll from 'better-scroll';
+import { useMyContext } from '../../context';
 interface Banner {
   imageUrl: string;
   [propName: string]: any;
@@ -11,7 +12,13 @@ interface Banner {
 interface HomeProps {
   [propName: string]: any;
 }
+
 const Home = (props: HomeProps) => {
+  useMyContext({
+    playerSize() {
+      scrollController.current && scrollController.current.refresh();
+    }
+  });
   const [banners, setBanners] = useState([]);
   const [recommend, setRecommend] = useState([]);
   const [newSong, setNewSong] = useState([]);
@@ -30,6 +37,7 @@ const Home = (props: HomeProps) => {
     if (scrollEle.current) {
       scrollController.current = new BScroll(scrollEle.current, {
         click: true,
+        observeDOM: false
       });
       return () => {
         scrollController.current && scrollController.current.destroy();

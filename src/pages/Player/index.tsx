@@ -101,25 +101,29 @@ const Player = () => {
   const toggleLoopType = () => {
     dispatch({ type: CHANGE_LOOP_TYPE, loopType: (loopType + 1) % 3 });
   };
-  useEffect(
-    () => {
-      if (currentId !== undefined) {
-        !showPlayer && dispatch({ type: SHOW_PLAYER });
-        fetchSong(currentId).then((current) => {
-          console.log(current);
-          dispatch({ type: CHANGE_CURRENT_SONG, payload: current });
-        });
-      }
-    },
-    [currentId]
-  );
-  useEffect(
-    () => {
-      if (!audioRef.current) return;
-      isPlay ? audioRef.current.play() : audioRef.current.pause();
-    },
-    [isPlay]
-  );
+  // useEffect(
+  //   () => {
+  //     if (currentId !== undefined) {
+  //       !showPlayer && dispatch({ type: SHOW_PLAYER });
+  //       fetchSong(currentId).then((current) => {
+  //         console.log(current);
+  //         dispatch({ type: CHANGE_CURRENT_SONG, payload: current });
+  //       });
+  //     }
+  //   },
+  //   [currentId]
+  // );
+  useEffect(() => {
+    !showPlayer && dispatch({ type: SHOW_PLAYER });
+    fetchSong(1347529801).then((current) => {
+      console.log(current);
+      dispatch({ type: CHANGE_CURRENT_SONG, payload: current });
+    });
+  }, []);
+  useEffect(() => {
+    if (!audioRef.current) return;
+    isPlay ? audioRef.current.play() : audioRef.current.pause();
+  }, [isPlay]);
   return (
     <div
       className={classNames(styles.playerWrapper, {
