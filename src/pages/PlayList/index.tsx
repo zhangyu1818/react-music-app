@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import styles from './index.module.scss';
 import classNames from 'classnames';
 import BScroll from 'better-scroll';
-import PlayListItem from './PlayListItem';
+import PlayListItem from '../../components/PlayListItem';
 import { Link } from 'react-router-dom';
 import { clamp } from 'lodash';
 import Context from '../../context';

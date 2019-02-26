@@ -48,6 +48,9 @@ class Swiper extends PureComponent<SwiperProps, SwiperState> {
   // 自动播放
   componentDidMount() {
     this.autoPlay();
+    document.addEventListener('visibilitychange', () => {
+      console.log(1);
+    });
   }
   componentWillUnmount() {
     clearInterval(this.autoPlayTimer);

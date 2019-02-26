@@ -29,7 +29,7 @@ const Home = (props: HomeProps) => {
       .then(({ albums }) => setNewSong(albums.slice(0, 6)));
     if (scrollEle.current) {
       scrollController.current = new BScroll(scrollEle.current, {
-        click: true
+        click: true,
       });
       return () => {
         scrollController.current && scrollController.current.destroy();
@@ -38,7 +38,7 @@ const Home = (props: HomeProps) => {
   }, []);
   return (
     <div className={styles.home} ref={scrollEle}>
-      <div>
+      <div className={styles.homeScroll}>
         <div className={styles.bannerWrapper}>
           <Swiper className={styles.banner} autoplay pagination>
             {banners.map((banner: Banner, index) => (
