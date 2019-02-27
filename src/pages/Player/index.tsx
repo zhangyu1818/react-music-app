@@ -10,6 +10,7 @@ import {
   CHANGE_LOOP_TYPE,
   CHANGE_PLAY_STATE,
   CHANGE_PLAYER_SIZE,
+  LOADING,
   NEXT_SONG,
   PREV_SONG,
   SHOW_PLAYER
@@ -101,29 +102,26 @@ const Player = () => {
   const toggleLoopType = () => {
     dispatch({ type: CHANGE_LOOP_TYPE, loopType: (loopType + 1) % 3 });
   };
-  // useEffect(
-  //   () => {
-  //     if (currentId !== undefined) {
-  //       !showPlayer && dispatch({ type: SHOW_PLAYER });
-  //       fetchSong(currentId).then((current) => {
-  //         console.log(current);
-  //         dispatch({ type: CHANGE_CURRENT_SONG, payload: current });
-  //       });
-  //     }
-  //   },
-  //   [currentId]
-  // );
-  useEffect(() => {
-    !showPlayer && dispatch({ type: SHOW_PLAYER });
-    fetchSong(1347529801).then((current) => {
-      console.log(current);
-      dispatch({ type: CHANGE_CURRENT_SONG, payload: current });
-    });
-  }, []);
-  useEffect(() => {
-    if (!audioRef.current) return;
-    isPlay ? audioRef.current.play() : audioRef.current.pause();
-  }, [isPlay]);
+  useEffect(
+    () => {
+      if (currentId !== undefined) {
+        !showPlayer && dispatch({ type: SHOW_PLAYER });
+        dispatch({ type: LOADING });
+        fetchSong(currentId).then((current) => {
+          console.log(current);
+          dispatch({ type: CHANGE_CURRENT_SONG, song: current });
+        });
+      }
+    },
+    [currentId]
+  );
+  useEffect(
+    () => {
+      if (!audioRef.current) return;
+      isPlay ? audioRef.current.play() : audioRef.current.pause();
+    },
+    [isPlay]
+  );
   return (
     <div
       className={classNames(styles.playerWrapper, {
@@ -189,7 +187,9 @@ const Player = () => {
       {/*歌曲、歌手名称*/}
       <div className={styles.songInfo}>
         <p className={styles.name}>{current.name}</p>
-        <p className={styles.singerName}>{current.singerName}</p>
+        <p className={styles.singerName}>
+          {current.singer.map((item) => item.name).join(' / ')}
+        </p>
       </div>
       {/*进度条*/}
       <ProgressBar

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import styles from './index.module.scss';
 import classNames from 'classnames';
 import BScroll from 'better-scroll';
-import PlayListItem from '../../components/PlayListItem';
+import ListItem from '../../components/ListItem';
 import { Link } from 'react-router-dom';
 import { clamp } from 'lodash';
 import { useMyContext } from '../../context';
@@ -138,8 +138,10 @@ const PlayList = (props: PlayListProps) => {
               <span className={styles.total}>{state.tracks.length}首</span>
             </div>
             {state.tracks.map((track: any, index: number) => (
-              <PlayListItem
-                onClick={() => onClickItem(track)}
+              <ListItem
+                onClick={() => {
+                  onClickItem(track)
+                }}
                 key={track.id}
                 index={index + 1}
                 name={track.name}

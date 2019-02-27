@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import Swiper, { SwiperSlider } from '../../components/Swiper';
 import styles from './index.module.scss';
 import Title from '../../components/Title';
-import ListItem from '../../components/ListItem';
+import ListItem from '../../components/SquareListItem';
 import BScroll from 'better-scroll';
 import { useMyContext } from '../../context';
 interface Banner {

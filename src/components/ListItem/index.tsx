@@ -1,30 +1,21 @@
-import React, { memo } from 'react';
-import classNames from 'classnames';
+import React from 'react';
 import styles from './index.module.scss';
-interface ListItemProps {
-  playCount?: number;
-  className?: string;
-  picUrl: string;
-  title: string;
-  onClick?: () => void;
+export interface PlayListItemProps {
+  index: number;
+  name: string;
+  singer: string;
+  onClick: () => void;
+  [propName: string]: any;
 }
-const ListItem = memo((props: ListItemProps) => (
-  <div
-    onClick={props.onClick ? props.onClick : undefined}
-    className={classNames(styles.listItem, props.className)}
-  >
-    <div className={styles.imgWrapper}>
-      {props.playCount ? (
-        <span className={styles.playCount}>
-          <i className='iconfont'>&#xe6c2;</i>
-          {props.playCount / 10000 > 1
-            ? ((props.playCount / 10000) | 0) + '万'
-            : props.playCount}
-        </span>
-      ) : null}
-      <img className={styles.img} src={props.picUrl} alt='' />
+const PlayListItem = (props: PlayListItemProps) => {
+  return (
+    <div className={styles.listItem} onClick={props.onClick}>
+      <span className={styles.index}>{props.index}</span>
+      <div className={styles.itemInfo}>
+        <h2 className={styles.itemName}>{props.name}</h2>
+        <p className={styles.itemSinger}>{props.singer}</p>
+      </div>
     </div>
-    <h2 className={styles.title}>{props.title}</h2>
-  </div>
-));
-export default ListItem;
+  );
+};
+export default PlayListItem;

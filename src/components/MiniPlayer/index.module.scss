@@ -15,42 +15,53 @@
       animation-play-state: paused;
     }
     border-radius: 50%;
-    width: rem(40);
-    height: rem(40);
-    margin-left: rem(20);
+    width: rem(35);
+    height: rem(35);
+    margin: 0 rem(20);
     animation: rotate 20s linear infinite forwards;
   }
   .playControl {
     width: rem(50);
     height: rem(50);
-    margin-left: rem(10);
     display: flex;
     justify-content: center;
     align-items: center;
     i {
-      font-size: rem(32);
+      font-size: rem(22);
       color: #fff;
+    }
+    .list {
+      font-size: rem(16);
     }
   }
   .songInfo {
-    width: rem(230);
+    width: rem(200);
     overflow: hidden;
-    p {
-      margin: 0;
-      display: inline-block;
-      color: $secondaryColor;
-    }
-    .name {
-      font-size: rem(16);
-      margin-right: rem(10);
+
+    .scrollTitle {
+      width: max-content;
+      white-space: nowrap;
+      .name {
+        font-size: rem(16);
+        margin: 0;
+        color: $secondaryColor;
+      }
     }
     .singer {
       font-size: rem(12);
+      margin: 0;
+      color: $secondaryColor;
     }
   }
 }
 @keyframes rotate {
   to {
     transform: rotate(1turn);
+  }
+}
+
+@keyframes :global(scroll) {
+  to {
+    transform: translateX(-100%);
   }
 }

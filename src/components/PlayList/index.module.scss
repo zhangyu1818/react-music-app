@@ -1,0 +1,73 @@
+@import '../../scss/utils';
+.playList {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(#000, 0.4);
+  .list {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: rem(387);
+    border-top-left-radius: rem(12);
+    border-top-right-radius: rem(12);
+    background: #ffffff;
+    .inner {
+      margin: rem(10) 0;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      .scroll {
+        .listItem {
+          position: relative;
+          width: 100%;
+          padding: rem(12) rem(10);
+
+          &:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: 0 rem(10);
+            border-bottom: 1px solid rgba($fontColor, 0.1);
+            transform: scaleY(0.4);
+          }
+          .index {
+            width: rem(20);
+            margin-right: rem(10);
+            height: rem(20);
+            float: left;
+            .play {
+              display: block;
+            }
+            i {
+              display: none;
+            }
+          }
+          .info {
+            display: flex;
+            align-items: flex-end;
+            p {
+              margin: 0;
+            }
+            .name {
+              font-size: rem(14);
+              margin-right: rem(4);
+              max-width: rem(320);
+              @include text-overflow();
+            }
+            .singer {
+              flex: 1;
+              font-size: rem(11);
+              @include text-overflow();
+            }
+          }
+        }
+      }
+    }
+  }
+}

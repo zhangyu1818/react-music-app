@@ -1,39 +1,46 @@
 @import '../../scss/utils';
 @import '../../scss/variables';
 .listItem {
-  width: rem(110);
-  height: rem(147);
+  width: 100%;
   font-size: 0;
-  .imgWrapper {
-    position: relative;
-    font-size: 0;
-    .playCount {
-      position: absolute;
-      color: #fff;
-      font-size: rem(10);
-      top: rem(2);
-      right: rem(4);
-      i {
-        font-size: rem(9);
-        margin: rem(4);
-      }
-    }
-    .img {
-      width: rem(110);
-      height: rem(110);
-      border-radius: rem(4);
-    }
+  padding: rem(10) 0 rem(10) 0;
+  overflow: hidden;
+  .index {
+    float: left;
+    display: inline-flex;
+    width: rem(50);
+    height: rem(36);
+    font-size: rem(16);
+    justify-content: center;
+    align-items: center;
+    color: rgba($fontColor, 0.6);
   }
-  .title {
-    margin: rem(4);
-    font-size: rem(10);
-    font-weight: normal;
-    color: $fontColor;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    /* autoprefixer: off */
-    -webkit-box-orient: vertical;
+  .itemInfo {
+    width: rem(325);
+    float: left;
+    position: relative;
+    padding-right: rem(20);
+    &:after {
+      content: '';
+      position: absolute;
+      right: rem(10);
+      bottom: rem(-10);
+      width: 100%;
+      border-bottom: 1px solid rgba($fontColor, 0.1);
+      transform: scaleY(0.4);
+    }
+    .itemName {
+      margin: 0;
+      font-size: rem(16);
+      font-weight: normal;
+      color: $fontColor;
+      @include text-overflow();
+    }
+    .itemSinger {
+      margin: 0;
+      font-size: rem(11);
+      color: rgba($fontColor, 0.8);
+      @include text-overflow();
+    }
   }
 }

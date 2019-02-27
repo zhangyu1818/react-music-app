@@ -7,3 +7,4 @@ export const CHANGE_PLAYER_SIZE = 'CHANGE_PLAYER_SIZE';
 export const ADD_MUSIC = 'ADD_MUSIC';
 export const NEXT_SONG = 'NEXT_SONG';
 export const PREV_SONG = 'PREV_SONG';
+export const LOADING = 'LOADING';

@@ -4,7 +4,7 @@ import Player from './pages/Player';
 import { initialState, reducer } from './reducer';
 import Context from './context';
 import Home from './pages/Home';
-import PlayList from './pages/PlayList';
+import SongList from './pages/SongList';
 import Album from './pages/Album';
 import MiniPlayer from './components/MiniPlayer';
 import { playerSizeType } from './utils/types';
@@ -22,7 +22,7 @@ const App = () => {
         <Router>
           <>
             <Route path='/' component={Home} />
-            <Route path='/playList' exact component={PlayList} />
+            <Route path='/playList' exact component={SongList} />
             <Route path='/album' exact component={Album} />
           </>
         </Router>

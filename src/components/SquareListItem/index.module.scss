@@ -1,0 +1,39 @@
+@import '../../scss/utils';
+@import '../../scss/variables';
+.listItem {
+  width: rem(110);
+  height: rem(147);
+  font-size: 0;
+  .imgWrapper {
+    position: relative;
+    font-size: 0;
+    .playCount {
+      position: absolute;
+      color: #fff;
+      font-size: rem(10);
+      top: rem(2);
+      right: rem(4);
+      i {
+        font-size: rem(9);
+        margin: rem(4);
+      }
+    }
+    .img {
+      width: rem(110);
+      height: rem(110);
+      border-radius: rem(4);
+    }
+  }
+  .title {
+    margin: rem(4);
+    font-size: rem(10);
+    font-weight: normal;
+    color: $fontColor;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* autoprefixer: off */
+    -webkit-box-orient: vertical;
+  }
+}

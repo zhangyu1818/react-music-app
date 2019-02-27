@@ -8,8 +8,7 @@ export interface Song {
   id: undefined;
   name: undefined;
   picUrl: undefined;
-  singerId: undefined;
-  singerName: undefined;
+  singer: [];
   lyric: undefined;
   translateLyric: undefined;
 
@@ -24,8 +23,7 @@ export interface State {
     id: number | undefined;
     name: string | undefined;
     picUrl: string | undefined;
-    singerId: number | undefined;
-    singerName: string | undefined;
+    singer: any[];
     lyric: string | undefined;
     translateLyric: string | undefined;
     [propName: string]: any;
@@ -38,12 +36,13 @@ export interface State {
   musicList: Song[];
   playerSize: playerSizeType;
   showPlayer: boolean;
+  loading: boolean;
 }
 
 export interface Action {
   type: string;
   isPlay?: boolean;
-  payload?: any;
+  song?: any;
   loopType?: loopTypes;
   playList?: any;
   size?: playerSizeType;
@@ -51,7 +50,9 @@ export interface Action {
 }
 
 export const initialState: State = {
-  current: <Song>{},
+  current: <Song>{
+    singer: []
+  },
   currentId: undefined,
   currentIndex: undefined,
   musicList: [],
@@ -59,16 +60,24 @@ export const initialState: State = {
   isPlay: false,
   loopType: loopTypes.order,
   playerSize: playerSizeType.normal,
-  showPlayer: false
+  showPlayer: false,
+  loading: false
 };
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     // 改变当前播放的音乐
     case types.CHANGE_CURRENT_SONG: {
-      if (action.payload === undefined) return state;
+      if (action.song === undefined) return state;
       return {
         ...state,
-        current: action.payload
+        current: action.song,
+        loading: false
+      };
+    }
+    case types.LOADING: {
+      return {
+        ...state,
+        loading: true
       };
     }
     // 改变播放状态

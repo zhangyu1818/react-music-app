@@ -15,9 +15,8 @@ export const fetchSong = async (songId: number) => {
   const {
     name,
     al: { name: albumName, picUrl },
-    ar: [singer]
+    ar: singer
   } = currentSongInfo;
-  const { id: singerId, name: singerName } = singer;
   const {
     data: { nolyric, uncollected, lrc, tlyric }
   } = await axios(`/lyric?id=${songId}`);
@@ -27,8 +26,7 @@ export const fetchSong = async (songId: number) => {
     url,
     albumName,
     picUrl,
-    singerId,
-    singerName,
+    singer,
     lyric: nolyric || uncollected ? undefined : lrc.lyric,
     translateLyric: nolyric || uncollected ? undefined : tlyric.translateLyric
   };
