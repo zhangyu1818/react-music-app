@@ -5,7 +5,9 @@
   font-size: rem(18);
   padding-left: rem(12);
   background: linear-gradient(to right, $mainColor 4px, #fff 0);
+  display: flex;
+  align-items: center;
   .arrow {
-    color: #ccc;
+    font-size: rem(24);
   }
 }

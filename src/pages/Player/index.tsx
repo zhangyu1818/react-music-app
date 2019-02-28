@@ -108,7 +108,6 @@ const Player = () => {
         !showPlayer && dispatch({ type: SHOW_PLAYER });
         dispatch({ type: LOADING });
         fetchSong(currentId).then((current) => {
-          console.log(current);
           dispatch({ type: CHANGE_CURRENT_SONG, song: current });
         });
       }
@@ -135,20 +134,20 @@ const Player = () => {
       />
       <div className={styles.topBar}>
         <div className={styles.back} onClick={zoomOut}>
-          <i className={classNames('iconfont', styles.icon)}>&#xe600;</i>
+          <i className={classNames('material-icons', styles.icon)}>keyboard_arrow_down</i>
         </div>
       </div>
       <div className={styles.controllerGroup}>
         <button className={styles.button}>
-          <i className='iconfont'>&#xe624;</i>
+          <i className='material-icons'>favorite_border</i>
         </button>
         <button className={styles.button} onClick={toggleLoopType}>
           {loopType === loopTypes.order ? (
-            <i className='iconfont'>&#xe609;</i>
+            <i className='material-icons'>repeat</i>
           ) : loopType === loopTypes.shuffle ? (
-            <i className='iconfont'>&#xe60a;</i>
+            <i className='material-icons'>shuffle</i>
           ) : (
-            <i className='iconfont'>&#xe607;</i>
+            <i className='material-icons'>repeat_one</i>
           )}
         </button>
       </div>
@@ -168,20 +167,20 @@ const Player = () => {
       {/*歌曲控制组*/}
       <div className={styles.buttonGroup}>
         <button className={styles.button} onClick={prevSong}>
-          <i className='iconfont'>&#xe76e;</i>
+          <i className='material-icons'>skip_previous</i>
         </button>
         <button
           className={classNames(styles.button, styles.actionButton)}
           onClick={togglePlayState}
         >
           {isPlay ? (
-            <i className='iconfont'>&#xe64d;</i>
+            <i className='material-icons'>pause</i>
           ) : (
-            <i className='iconfont'>&#xe770;</i>
+            <i className='material-icons'>play_arrow</i>
           )}
         </button>
         <button className={styles.button} onClick={nextSong}>
-          <i className='iconfont'>&#xe76d;</i>
+          <i className='material-icons'>skip_next</i>
         </button>
       </div>
       {/*歌曲、歌手名称*/}

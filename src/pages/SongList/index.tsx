@@ -33,7 +33,10 @@ const initialState: PlayListState = {
   tracks: []
 };
 const PlayList = (props: PlayListProps) => {
-  const { dispatch } = useMyContext({
+  const {
+    state: { currentId },
+    dispatch
+  } = useMyContext({
     playerSize() {
       scrollController.current && scrollController.current.refresh();
     }
@@ -90,8 +93,8 @@ const PlayList = (props: PlayListProps) => {
     <div className={styles.playList}>
       <div className={styles.header}>
         <Link to='/'>
-          <i className={classNames('iconfont', styles.headerBackIcon)}>
-            &#xe64b;
+          <i className={classNames('material-icons', styles.headerBackIcon)}>
+            arrow_back
           </i>
         </Link>
         <div className={styles.headerBg} ref={headerBg}>
@@ -106,14 +109,14 @@ const PlayList = (props: PlayListProps) => {
           <div className={styles.desc}>
             <div className={styles.imgWrapper}>
               <span className={styles.playCount}>
-                <i className='iconfont'>&#xe6c2;</i>
+                <i className='material-icons'>headset</i>
                 {state.playCount / 10000 > 1
                   ? ((state.playCount / 10000) | 0) + '万'
                   : state.playCount}
               </span>
               <img src={state.coverImgUrl} alt='' className={styles.coverImg} />
-              <i className={classNames('iconfont', styles.listInfo)}>
-                &#xe6e5;
+              <i className={classNames('material-icons', styles.listInfo)}>
+                &#xe88f;
               </i>
             </div>
             <div className={styles.info}>
@@ -140,8 +143,9 @@ const PlayList = (props: PlayListProps) => {
             {state.tracks.map((track: any, index: number) => (
               <ListItem
                 onClick={() => {
-                  onClickItem(track)
+                  onClickItem(track);
                 }}
+                current={track.id === currentId}
                 key={track.id}
                 index={index + 1}
                 name={track.name}

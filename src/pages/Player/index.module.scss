@@ -109,6 +109,9 @@ $Left: 45;
     display: inline-block;
     border-radius: 3px;
     .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       color: #fff;
       border: none;
       outline: none;

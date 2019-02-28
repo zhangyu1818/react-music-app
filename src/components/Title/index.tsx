@@ -7,7 +7,9 @@ interface TitleProps {
 const Title = React.memo((props: TitleProps) => (
   <h1 className={styles.title}>
     {props.title}
-    <i className={classNames('iconfont', styles.arrow)}> &#xe683;</i>
+    <i className={classNames('material-icons', styles.arrow)}>
+      keyboard_arrow_right
+    </i>
   </h1>
 ));
 export default Title;

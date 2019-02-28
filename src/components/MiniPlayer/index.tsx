@@ -43,7 +43,6 @@ const MiniPlayer = () => {
     !state.showPlayer || state.playerSize === playerSizeType.normal
       ? 'none'
       : 'flex';
-  console.log(state.current)
   return (
     <div
       className={styles.miniPlayer}
@@ -63,19 +62,15 @@ const MiniPlayer = () => {
       </div>
       <div className={styles.playControl} onClick={togglePlayState}>
         {state.isPlay ? (
-          <i className='iconfont'>&#xe64d;</i>
+          <i className='material-icons'>pause</i>
         ) : (
-          <i className='iconfont'>&#xe770;</i>
+          <i className='material-icons'>play_arrow</i>
         )}
       </div>
       <div className={styles.playControl} onClick={togglePlayList}>
-        <i className={classNames('iconfont', styles.list)}>&#xe640;</i>
+        <i className={classNames('material-icons', styles.list)}>queue_music</i>
       </div>
-      <PlayList
-        musicList={state.musicList || []}
-        isOpen={listState}
-        close={() => setListState(false)}
-      />
+      <PlayList isOpen={listState} close={() => setListState(false)} />
     </div>
   );
 };

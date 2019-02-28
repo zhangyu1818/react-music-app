@@ -1,6 +1,6 @@
 import * as types from './actionType';
 import { loopTypes, playerSizeType } from '../utils/types';
-import { shuffle } from 'lodash';
+import { shuffle, clamp } from 'lodash';
 
 export interface Song {
   url: undefined;
@@ -47,6 +47,7 @@ export interface Action {
   playList?: any;
   size?: playerSizeType;
   track?: any;
+  songId?: number;
 }
 
 export const initialState: State = {
@@ -118,6 +119,42 @@ export const reducer = (state: State, action: Action): State => {
         currentId: action.playList[0].id,
         currentIndex: 0,
         loopType: loopTypes.order
+      };
+    }
+    // 从播放列表删除一首歌
+    case types.DELETE_SONG: {
+      if (action.songId === undefined) return state;
+      const playList = state.playList.filter(
+        (item) => item.id !== action.songId
+      );
+      const musicList = state.musicList.filter(
+        (item) => item.id !== action.songId
+      );
+      const isCurrentSong = state.currentId === action.songId;
+      const currentId = playList.length
+        ? isCurrentSong
+          ? playList[state.currentIndex || 0].id
+          : state.currentId
+        : undefined;
+      const currentIndex = isCurrentSong
+        ? state.currentIndex
+        : playList.findIndex((item) => item.id === currentId);
+      return {
+        ...state,
+        playList,
+        musicList,
+        currentId,
+        currentIndex
+      };
+    }
+    // 删除所有
+    case types.INIT_LIST: {
+      return {
+        ...state,
+        playList: [],
+        musicList: [],
+        currentIndex: undefined,
+        currentId: undefined
       };
     }
     // 播放一首歌

@@ -5,6 +5,19 @@
   font-size: 0;
   padding: rem(10) 0 rem(10) 0;
   overflow: hidden;
+  &.current {
+    .index {
+      color: rgba($mainColor, 0.6);
+    }
+    .itemInfo {
+      .itemName {
+        color: $mainColor;
+      }
+      .itemSinger {
+        color: rgba($mainColor, 0.8);
+      }
+    }
+  }
   .index {
     float: left;
     display: inline-flex;

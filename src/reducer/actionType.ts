@@ -8,3 +8,5 @@ export const ADD_MUSIC = 'ADD_MUSIC';
 export const NEXT_SONG = 'NEXT_SONG';
 export const PREV_SONG = 'PREV_SONG';
 export const LOADING = 'LOADING';
+export const DELETE_SONG = 'DELETE_SONG';
+export const INIT_LIST = 'INIT_LIST';

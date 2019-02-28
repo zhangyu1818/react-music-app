@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Swiper, { SwiperSlider } from '../../components/Swiper';
 import styles from './index.module.scss';
 import Title from '../../components/Title';
 import ListItem from '../../components/SquareListItem';
 import BScroll from 'better-scroll';
 import { useMyContext } from '../../context';
+import axios from 'axios';
 interface Banner {
   imageUrl: string;
   [propName: string]: any;
@@ -25,15 +26,13 @@ const Home = (props: HomeProps) => {
   const scrollEle = useRef<HTMLDivElement | null>(null);
   const scrollController = useRef<BScroll | null>(null);
   useEffect(() => {
-    fetch('/banner')
-      .then((res) => res.json())
-      .then(({ banners }) => setBanners(banners));
-    fetch('/personalized')
-      .then((res) => res.json())
-      .then(({ result }) => setRecommend(result.slice(0, 6)));
-    fetch('/album/newest')
-      .then((res) => res.json())
-      .then(({ albums }) => setNewSong(albums.slice(0, 6)));
+    axios('/banner').then(({ data: { banners } }) => setBanners(banners));
+    axios('/personalized').then(({ data: { result } }) =>
+      setRecommend(result.slice(0, 6))
+    );
+    axios('/album/newest').then(({ data: { albums } }) =>
+      setNewSong(albums.slice(0, 6))
+    );
     if (scrollEle.current) {
       scrollController.current = new BScroll(scrollEle.current, {
         click: true,

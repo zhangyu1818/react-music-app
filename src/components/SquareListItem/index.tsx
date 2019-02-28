@@ -16,7 +16,7 @@ const ListItem = memo((props: ListItemProps) => (
     <div className={styles.imgWrapper}>
       {props.playCount ? (
         <span className={styles.playCount}>
-          <i className='iconfont'>&#xe6c2;</i>
+          <i className='material-icons'>headset</i>
           {props.playCount / 10000 > 1
             ? ((props.playCount / 10000) | 0) + '万'
             : props.playCount}

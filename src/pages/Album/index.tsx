@@ -36,7 +36,10 @@ const initialState: PlayListState = {
   songs: []
 };
 const AlbumList = (props: PlayListProps) => {
-  const { dispatch } = useMyContext({
+  const {
+    state: { currentId },
+    dispatch
+  } = useMyContext({
     playerSize() {
       scrollController.current && scrollController.current.refresh();
     }
@@ -143,6 +146,7 @@ const AlbumList = (props: PlayListProps) => {
             {albumState.songs.map((track: any, index) => (
               <ListItem
                 onClick={() => onClickItem(track)}
+                current={track.id === currentId}
                 key={track.id}
                 index={index + 1}
                 name={track.name}

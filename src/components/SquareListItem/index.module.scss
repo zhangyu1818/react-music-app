@@ -8,6 +8,8 @@
     position: relative;
     font-size: 0;
     .playCount {
+      display: flex;
+      align-items: center;
       position: absolute;
       color: #fff;
       font-size: rem(10);
