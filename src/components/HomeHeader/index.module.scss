@@ -1,0 +1,36 @@
+@import '../../scss/variables';
+@import '../../scss/utils';
+.homeHeader{
+  background: $mainColor;
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: rem(10);
+    color: #fff;
+    font-size: rem(24);
+    text-align: center;
+    margin: 0;
+    height: rem(53);
+  }
+  nav{
+    height: rem(40);
+    width: rem(300);
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    a{
+      color: #fff;
+      font-size: rem(15);
+      height: rem(30);
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 2px solid transparent;
+      &.active{
+        border-bottom-color: #fff;
+      }
+    }
+  }
+}
+

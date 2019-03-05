@@ -21,17 +21,6 @@ interface ItemProps {
   };
 }
 
-interface dragDropContext {
-  canDrag: boolean;
-  dragStart: {
-    pos: number;
-    timeStamp: number;
-  };
-  dragMove: {
-    pos: number;
-    timeStamp: number;
-  };
-}
 
 const Item = React.memo((props: ItemProps) => (
   <div
@@ -58,6 +47,9 @@ const Item = React.memo((props: ItemProps) => (
   </div>
 ));
 
+const stopPropagation = (event: React.TouchEvent | React.MouseEvent) =>
+  event.stopPropagation();
+
 const PlayList = (props: any) => {
   const { state, dispatch } = useMyContext({
     musicList() {
@@ -66,17 +58,6 @@ const PlayList = (props: any) => {
   });
   const scrollEle = useRef<HTMLDivElement>(null);
   const scrollController = useRef<BScroll | null>(null);
-  const dragDropContext = useRef<dragDropContext>({
-    canDrag: false,
-    dragStart: {
-      pos: 0,
-      timeStamp: 0
-    },
-    dragMove: {
-      pos: 0,
-      timeStamp: 0
-    }
-  });
   // 初始滚动列表
   useEffect(() => {
     if (scrollEle.current) {
@@ -127,15 +108,6 @@ const PlayList = (props: any) => {
     event.stopPropagation();
     dispatch({ type: INIT_LIST });
   };
-  const onTouchStart = (event: React.TouchEvent) => {
-    event.stopPropagation();
-    const { touches } = event;
-    const touch = touches[0];
-    if (!scrollController.current) return;
-    const y = scrollController.current.y;
-    if (y) return;
-    console.log(touch);
-  };
   return (
     <div
       style={{ display: props.isOpen ? 'block' : 'none' }}
@@ -144,8 +116,7 @@ const PlayList = (props: any) => {
     >
       <div
         className={styles.list}
-        onClick={(event: React.MouseEvent) => event.stopPropagation()}
-        onTouchStart={onTouchStart}
+        onClick={stopPropagation}
       >
         <div className={styles.topBar}>
           <div className={styles.loopType} onClick={toggleLoopType}>

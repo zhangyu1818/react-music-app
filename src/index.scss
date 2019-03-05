@@ -37,18 +37,6 @@ html {
       margin-bottom: rem(50);
     }
   }
-  .app-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: rem(10);
-    color: #fff;
-    background: $mainColor;
-    font-size: rem(24);
-    text-align: center;
-    margin: 0;
-    height: rem(60);
-  }
 }
 
 @font-face {
