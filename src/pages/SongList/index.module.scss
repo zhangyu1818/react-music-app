@@ -8,14 +8,40 @@
   z-index: 2;
   background: #ffffff;
   .scroll {
-    .list{
-      display: grid;
-      grid-template-columns: rem(110) rem(110) rem(110);
-      grid-template-rows: 1fr 1fr;
-      grid-column-gap: rem(10);
-      grid-row-gap: rem(20);
-      width: rem(350);
-      margin: auto;
+    .content {
+      position: relative;
+      .list {
+        display: grid;
+        grid-template-columns: rem(110) rem(110) rem(110);
+        grid-template-rows: 1fr 1fr;
+        grid-column-gap: rem(10);
+        grid-row-gap: rem(20);
+        width: rem(350);
+        margin: auto;
+      }
+      .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: rem(30);
+        font-size: rem(12);
+        color: rgba($fontColor, 0.6);
+        span {
+          position: relative;
+          margin-left: rem(20);
+        }
+      }
+      .noMore {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: rem(30);
+        line-height: rem(30);
+        font-size: rem(12);
+        color: rgba($fontColor, 0.6);
+        text-align: center;
+      }
     }
   }
 }

@@ -1,0 +1,39 @@
+@import '../../scss/utils';
+@import '../../scss/variables';
+.playIcon {
+  position: relative;
+  display: inline-block;
+  margin-left: rem(10);
+  height: rem(10);
+  font-size: 0;
+  i {
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background: #000;
+    transform-origin: bottom;
+    animation: scaleHeight 0.3s linear alternate infinite;
+    bottom: 0;
+    background: $mainColor;
+    &:nth-child(1) {
+      left: 0;
+      animation-delay: 0.1s;
+    }
+    &:nth-child(2) {
+      left: 4px;
+    }
+    &:nth-child(3) {
+      left: 8px;
+      animation-delay: 0.3s;
+    }
+    &:nth-child(4) {
+      left: 12px;
+      animation-delay: 0.2s;
+    }
+  }
+}
+@keyframes scaleHeight {
+  to {
+    transform: scaleY(0.6);
+  }
+}

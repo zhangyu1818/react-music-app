@@ -92,11 +92,12 @@ const PlayList = (props: PlayListProps) => {
   return (
     <div className={styles.content}>
       <div className={styles.header}>
-        <Link to='/'>
-          <i className={classNames('material-icons', styles.headerBackIcon)}>
-            arrow_back
-          </i>
-        </Link>
+        <i
+          className={classNames('material-icons', styles.headerBackIcon)}
+          onClick={() => props.history.goBack()}
+        >
+          arrow_back
+        </i>
         <div className={styles.headerBg} ref={headerBg}>
           <p className={styles.headerName}>{state.name}</p>
         </div>

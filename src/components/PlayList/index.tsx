@@ -10,6 +10,7 @@ import {
   INIT_LIST
 } from '../../reducer/actionType';
 import { loopTypes } from '../../utils/types';
+import PlayIcon from '../PlayIcon';
 
 interface ItemProps {
   onClick?: (event: React.MouseEvent) => void;
@@ -20,7 +21,6 @@ interface ItemProps {
     ar: any[];
   };
 }
-
 
 const Item = React.memo((props: ItemProps) => (
   <div
@@ -34,12 +34,7 @@ const Item = React.memo((props: ItemProps) => (
         {' - '}
         {props.track.ar.map((singer: any) => singer.name).join(' / ')}
       </span>
-      <div className={styles.playIcon}>
-        <i />
-        <i />
-        <i />
-        <i />
-      </div>
+      {props.current && <PlayIcon style={{ top: '-0.04rem' }} />}
     </div>
     <div className={styles.delete} onClick={props.onClickDelete}>
       <i className='material-icons'>close</i>
@@ -74,22 +69,19 @@ const PlayList = (props: any) => {
     };
   }, []);
   // 每次打开后刷新列表,滚动到当前播放歌曲
-  useEffect(
-    () => {
-      if (scrollController.current && props.isOpen) {
-        scrollController.current.refresh();
-        const currentELe = scrollEle.current!.querySelector('[data-current]');
-        currentELe &&
-          scrollController.current.scrollToElement(
-            currentELe as HTMLDivElement,
-            0,
-            true,
-            true
-          );
-      }
-    },
-    [props.isOpen]
-  );
+  useEffect(() => {
+    if (scrollController.current && props.isOpen) {
+      scrollController.current.refresh();
+      const currentELe = scrollEle.current!.querySelector('[data-current]');
+      currentELe &&
+        scrollController.current.scrollToElement(
+          currentELe as HTMLDivElement,
+          0,
+          true,
+          true
+        );
+    }
+  }, [props.isOpen]);
   const onTouchMask = (event: React.MouseEvent) => {
     event.stopPropagation();
     props.close();
@@ -114,10 +106,7 @@ const PlayList = (props: any) => {
       className={styles.playList}
       onClick={onTouchMask}
     >
-      <div
-        className={styles.list}
-        onClick={stopPropagation}
-      >
+      <div className={styles.list} onClick={stopPropagation}>
         <div className={styles.topBar}>
           <div className={styles.loopType} onClick={toggleLoopType}>
             {state.loopType === loopTypes.order ? (
