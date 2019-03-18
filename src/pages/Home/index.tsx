@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Swiper, { SwiperSlider } from '../../components/Swiper';
 import styles from './index.module.scss';
 import Title from '../../components/Title';
-import ListItem from '../../components/SquareListItem';
+import SquareListItem from '../../components/SquareListItem';
 import BScroll from 'better-scroll';
 import { useMyContext } from '../../context';
 import axios from 'axios';
@@ -59,10 +59,10 @@ const Home = (props: HomeProps) => {
           </Swiper>
         </div>
         <div className={styles.recommend}>
-          <Title title='推荐歌单' />
+          <Title title='推荐歌单' to='/songList' />
           <div className={styles.recommendList}>
             {recommend.map((item: any) => (
-              <ListItem
+              <SquareListItem
                 onClick={() => {
                   props.history.push('/playList', item);
                 }}
@@ -75,10 +75,10 @@ const Home = (props: HomeProps) => {
           </div>
         </div>
         <div className={styles.recommend}>
-          <Title title='最新专辑' />
+          <Title title='最新专辑' to="/"/>
           <div className={styles.recommendList}>
             {newSong.map((item: any) => (
-              <ListItem
+              <SquareListItem
                 onClick={() => {
                   props.history.push('/album', item);
                 }}

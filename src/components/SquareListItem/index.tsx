@@ -8,7 +8,7 @@ interface ListItemProps {
   title: string;
   onClick?: () => void;
 }
-const ListItem = memo((props: ListItemProps) => (
+const SquareListItem = memo((props: ListItemProps) => (
   <div
     onClick={props.onClick ? props.onClick : undefined}
     className={classNames(styles.listItem, props.className)}
@@ -27,4 +27,4 @@ const ListItem = memo((props: ListItemProps) => (
     <h2 className={styles.title}>{props.title}</h2>
   </div>
 ));
-export default ListItem;
+export default SquareListItem;

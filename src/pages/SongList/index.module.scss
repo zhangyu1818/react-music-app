@@ -1,173 +1,21 @@
-@import '../../scss/variables';
 @import '../../scss/utils';
-.playList {
+.listWrapper {
   position: absolute;
   top: 0;
+  right: 0;
   bottom: 0;
   left: 0;
-  right: 0;
   z-index: 2;
-  background: #fff;
-  .bgImg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    transform-origin: top;
-    will-change: transform;
-    &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      left: 0;
-      background: linear-gradient(rgba(#000, 0.6) 0, rgba(#000, 0.6) 0);
-    }
-    img {
-      position: relative;
-      z-index: -1;
-      width: rem(375);
-      height: rem(375);
-    }
-  }
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    height: rem(50);
-    width: 100%;
-    display: flex;
-    align-items: center;
-    .headerBackIcon {
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      width: rem(50);
-      height: rem(50);
-      font-size: rem(30);
-    }
-    .headerBg {
-      opacity: 0;
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      z-index: -1;
-      background: $mainColor;
-      padding-left: rem(50);
-      .headerName {
-        color: #fff;
-        padding: 0 rem(20);
-        font-size: rem(14);
-      }
-    }
-  }
+  background: #ffffff;
   .scroll {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    .desc {
-      padding: rem(80) rem(20) rem(70);
-      font-size: 0;
-      overflow: hidden;
-      .imgWrapper {
-        position: relative;
-        float: left;
-        border-radius: rem(6);
-        width: rem(130);
-        height: rem(130);
-        margin-right: rem(20);
-        background: linear-gradient(rgba(0, 0, 0, 0.6) 0, rgba(0, 0, 0, 0.6) 0);
-        overflow: hidden;
-        color: #ffffff;
-        .playCount {
-          position: absolute;
-          font-size: rem(10);
-          top: rem(2);
-          right: rem(4);
-          i {
-            font-size: rem(9);
-            margin: rem(4);
-          }
-        }
-        .coverImg {
-          width: 100%;
-          box-shadow: 1px 1px 2px 0 rgba(#000, 0.2);
-        }
-        .listInfo {
-          position: absolute;
-          overflow: hidden;
-          right: rem(4);
-          bottom: rem(4);
-          font-size: rem(16);
-        }
-      }
-      .info {
-        float: left;
-        width: rem(180);
-        .playListName {
-          font-size: rem(16);
-          color: #ffffff;
-        }
-        .creator {
-          display: flex;
-          align-items: center;
-          .creatorAvatar {
-            border-radius: 50%;
-            width: rem(18);
-            height: rem(18);
-            margin-right: rem(8);
-          }
-          .creatorName {
-            flex: 1;
-            font-size: rem(10);
-            color: #ffffff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
-        }
-      }
-    }
-    .list {
-      border-top-left-radius: rem(12);
-      border-top-right-radius: rem(12);
-      position: relative;
-      background: #fff;
-      .playAll {
-        width: 100%;
-        padding: rem(14) rem(25);
-        position: relative;
-        &:before {
-          content: '';
-          position: absolute;
-          left: rem(14);
-          right: rem(14);
-          bottom: 0;
-          border-bottom: 1px solid rgba($fontColor, 0.1);
-          transform: scaleY(0.4);
-        }
-        .playButton {
-          background: $secondaryColor;
-          color: $mainColor;
-          border: none;
-          outline: none;
-          padding: rem(5) rem(7);
-          border-radius: rem(4);
-          font-size: rem(14);
-          margin-right: rem(8);
-        }
-        .total {
-          font-size: rem(12);
-          color: rgba($fontColor, 0.8);
-        }
-      }
+    .list{
+      display: grid;
+      grid-template-columns: rem(110) rem(110) rem(110);
+      grid-template-rows: 1fr 1fr;
+      grid-column-gap: rem(10);
+      grid-row-gap: rem(20);
+      width: rem(350);
+      margin: auto;
     }
   }
 }

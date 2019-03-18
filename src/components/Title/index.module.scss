@@ -7,6 +7,7 @@
   background: linear-gradient(to right, $mainColor 4px, #fff 0);
   display: flex;
   align-items: center;
+  width: rem(110);
   .arrow {
     font-size: rem(24);
   }

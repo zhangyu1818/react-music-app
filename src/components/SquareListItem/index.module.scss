@@ -7,6 +7,15 @@
   .imgWrapper {
     position: relative;
     font-size: 0;
+    &:before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: rem(30);
+      background: linear-gradient(rgba(#333,0.3) 20%,transparent);
+    }
     .playCount {
       display: flex;
       align-items: center;

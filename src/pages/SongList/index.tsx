@@ -1,162 +1,61 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './index.module.scss';
-import classNames from 'classnames';
+import axios from 'axios';
+import SquareListItem from '../../components/SquareListItem';
 import BScroll from 'better-scroll';
-import ListItem from '../../components/ListItem';
-import { Link } from 'react-router-dom';
-import { clamp } from 'lodash';
-import { useMyContext } from '../../context';
-import { ADD_MUSIC, CHANGE_PLAY_LIST } from '../../reducer/actionType';
 
-interface PlayListState {
-  coverImgUrl: string;
-  playCount: number;
-  name: string;
-  creator: {
-    avatarUrl: string;
-    nickname: string;
-  };
-  tracks: any[];
-}
-interface PlayListProps {
-  setBgImg?: Function;
-  [propName: string]: any;
-}
-const initialState: PlayListState = {
-  coverImgUrl: '',
-  playCount: 0,
-  name: '',
-  creator: {
-    avatarUrl: '',
-    nickname: ''
-  },
-  tracks: []
-};
-const PlayList = (props: PlayListProps) => {
-  const {
-    state: { currentId },
-    dispatch
-  } = useMyContext({
-    playerSize() {
-      scrollController.current && scrollController.current.refresh();
-    }
-  });
-  const headerBg = useRef<HTMLDivElement | null>(null);
-  const bgImg = useRef<HTMLDivElement | null>(null);
-  const scrollEle = useRef<HTMLDivElement | null>(null);
+const SongList = (props: any) => {
+  const [songList, setSongList] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(false);
   const scrollController = useRef<BScroll | null>(null);
-  const [state, setState] = useState(initialState);
+  const before = useRef(0);
   useEffect(() => {
-    const { setBgImg, location, history } = props;
-    if (!location.state) {
-      history.push('/');
-      return;
-    }
-    fetch(`/playlist/detail?id=${location.state.id}`)
-      .then((res) => res.json())
-      .then(({ playlist }) => {
-        setState({ ...state, ...playlist });
-        setBgImg && setBgImg(playlist.coverImgUrl);
-        if (scrollEle.current) {
-          scrollController.current = new BScroll(scrollEle.current, {
-            probeType: 3,
-            observeDOM: false,
-            click: true
-          });
-          scrollController.current.on('scroll', ({ y }) => {
-            if (y > 0 && bgImg.current) {
-              bgImg.current.style.transform = `scale(${1 + y / 700})`;
-            }
-            if (headerBg.current) {
-              headerBg.current.style.opacity = `${clamp(-y / 250, 0, 1)}`;
-            }
-          });
-        }
-      });
-    return () => {
-      scrollController.current && scrollController.current.destroy();
-    };
+    fetchList();
+    scrollController.current = new BScroll(`.${styles.listWrapper}`, {
+      pullUpLoad: true
+    });
+    scrollController.current.on('pullingUp', () => {
+      fetchList().then(res=>console.log(res));
+    });
   }, []);
-  const playAll = () => {
-    dispatch({
-      type: CHANGE_PLAY_LIST,
-      playList: state.tracks
-    });
+  const fetchList = async () => {
+    const { data, status } = await axios(
+      `/top/playlist/highquality?limit=24${
+        before.current ? `&before=${before.current}` : ''
+      }`
+    );
+    if (status !== 200) throw new Error('数据获取失败');
+    const { more, playlists } = data;
+    const updateTime = playlists.length
+      ? playlists[playlists.length - 1].updateTime
+      : before.current;
+    before.current = updateTime;
+    setHasMore(more);
+    setSongList((prevState) => [...prevState, ...(playlists as never[])]);
   };
-  const onClickItem = (track: object) => {
-    dispatch({
-      type: ADD_MUSIC,
-      track
-    });
-  };
+  useEffect(() => {
+    console.log(1);
+  });
   return (
-    <div className={styles.playList}>
-      <div className={styles.header}>
-        <Link to='/'>
-          <i className={classNames('material-icons', styles.headerBackIcon)}>
-            arrow_back
-          </i>
-        </Link>
-        <div className={styles.headerBg} ref={headerBg}>
-          <p className={styles.headerName}>{state.name}</p>
-        </div>
-      </div>
-      <div className={styles.bgImg} ref={bgImg}>
-        <img src={state.coverImgUrl} alt='' />
-      </div>
-      <div className={styles.scroll} ref={scrollEle}>
-        <div style={{ willChange: 'transform' }}>
-          <div className={styles.desc}>
-            <div className={styles.imgWrapper}>
-              <span className={styles.playCount}>
-                <i className='material-icons'>headset</i>
-                {state.playCount / 10000 > 1
-                  ? ((state.playCount / 10000) | 0) + '万'
-                  : state.playCount}
-              </span>
-              <img src={state.coverImgUrl} alt='' className={styles.coverImg} />
-              <i className={classNames('material-icons', styles.listInfo)}>
-                &#xe88f;
-              </i>
-            </div>
-            <div className={styles.info}>
-              <h1 className={styles.playListName}>{state.name}</h1>
-              <div className={styles.creator}>
-                <img
-                  src={state.creator.avatarUrl}
-                  alt=''
-                  className={styles.creatorAvatar}
-                />
-                <span className={styles.creatorName}>
-                  {state.creator.nickname}
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className={styles.list}>
-            <div className={styles.playAll}>
-              <button className={styles.playButton} onClick={playAll}>
-                播放全部
-              </button>
-              <span className={styles.total}>{state.tracks.length}首</span>
-            </div>
-            {state.tracks.map((track: any, index: number) => (
-              <ListItem
-                onClick={() => {
-                  onClickItem(track);
-                }}
-                current={track.id === currentId}
-                key={track.id}
-                index={index + 1}
-                name={track.name}
-                singer={track.ar.map((ar: any) => ar.name).join('/')}
-              />
-            ))}
-          </div>
+    <div className={styles.listWrapper}>
+      <div className={styles.scroll}>
+        <div className={styles.list}>
+          {songList.map((item: any) => (
+            <SquareListItem
+              onClick={() => {
+                props.history.push('/playList', item);
+              }}
+              key={item.id}
+              playCount={item.playCount}
+              picUrl={item.coverImgUrl}
+              title={item.name}
+            />
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
-export default PlayList;
+export default SongList;
