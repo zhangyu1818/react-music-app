@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './index.module.scss';
 import classNames from 'classnames';
 import BScroll from 'better-scroll';
 import ListItem from '../../components/ListItem';
-import { Link } from 'react-router-dom';
 import { clamp } from 'lodash';
 import { useMyContext } from '../../context';
 import { ADD_MUSIC, CHANGE_PLAY_LIST } from '../../reducer/actionType';
+import paramImg from '../../utils/paramImg';
 
 interface PlayListState {
   coverImgUrl: string;
@@ -91,7 +91,7 @@ const PlayList = (props: PlayListProps) => {
   };
   return (
     <div className={styles.content}>
-      <div className={styles.header}>
+      <header className={styles.header}>
         <i
           className={classNames('material-icons', styles.headerBackIcon)}
           onClick={() => props.history.goBack()}
@@ -101,12 +101,12 @@ const PlayList = (props: PlayListProps) => {
         <div className={styles.headerBg} ref={headerBg}>
           <p className={styles.headerName}>{state.name}</p>
         </div>
-      </div>
+      </header>
       <div className={styles.bgImg} ref={bgImg}>
-        <img src={state.coverImgUrl} alt='' />
+        <img src={state.coverImgUrl && state.coverImgUrl + paramImg()} alt='' />
       </div>
       <div className={styles.scroll} ref={scrollEle}>
-        <div style={{ willChange: 'transform' }}>
+        <div style={{ willChange: 'transform', minHeight: '101%' }}>
           <div className={styles.desc}>
             <div className={styles.imgWrapper}>
               <span className={styles.playCount}>
@@ -115,7 +115,11 @@ const PlayList = (props: PlayListProps) => {
                   ? ((state.playCount / 10000) | 0) + '万'
                   : state.playCount}
               </span>
-              <img src={state.coverImgUrl} alt='' className={styles.coverImg} />
+              <img
+                src={state.coverImgUrl && state.coverImgUrl + paramImg(140)}
+                alt=''
+                className={styles.coverImg}
+              />
               <i className={classNames('material-icons', styles.listInfo)}>
                 &#xe88f;
               </i>
@@ -124,7 +128,10 @@ const PlayList = (props: PlayListProps) => {
               <h1 className={styles.playListName}>{state.name}</h1>
               <div className={styles.creator}>
                 <img
-                  src={state.creator.avatarUrl}
+                  src={
+                    state.creator.avatarUrl &&
+                    state.creator.avatarUrl + paramImg(36)
+                  }
                   alt=''
                   className={styles.creatorAvatar}
                 />

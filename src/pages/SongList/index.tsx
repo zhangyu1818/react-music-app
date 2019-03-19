@@ -1,9 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './index.module.scss';
-import axios from 'axios';
 import SquareListItem from '../../components/SquareListItem';
 import BScroll from 'better-scroll';
 import PlayIcon from '../../components/PlayIcon';
+import request from '../../utils/request';
+import Categories from '../Categories';
+import { Route } from 'react-router';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
+import SimpleHeader from '../../components/SimpleHeader';
 
 const Loading = (props: { visible: boolean }) => (
   <div
@@ -26,11 +31,13 @@ const NoMore = (props: { hasMore: boolean }) => (
 let lastHasMore = false;
 
 const SongList = (props: any) => {
-  const [songList, setSongList] = useState([]);
+  const [songList, setSongList] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [stateCat, setStateCat] = useState('全部歌单');
   const scrollController = useRef<BScroll | null>(null);
-  const before = useRef(0);
+  const offset = useRef(0);
+  const cat = useRef(stateCat);
   useEffect(() => {
     fetchList().then(() => {
       scrollController.current = new BScroll(`.${styles.listWrapper}`, {
@@ -49,48 +56,75 @@ const SongList = (props: any) => {
       scrollController.current!.destroy();
     };
   }, []);
-  useEffect(() => {});
+  useEffect(
+    () => {
+      scrollController.current && scrollController.current.refresh();
+      scrollController.current && scrollController.current.finishPullUp();
+      setLoading(false);
+    },
+    [songList.length]
+  );
   const fetchList = async () => {
     setLoading(true);
-    const { data, status } = await axios(
-      `/top/playlist/highquality?limit=24${
-        before.current ? `&before=${before.current}` : ''
-      }`
+    const { more, playlists } = await request(
+      `/top/playlist?limit=24${
+        offset.current ? `&offset=${offset.current}` : ''
+      }${cat.current ? `&cat=${cat.current}` : ''}`
     );
-    if (status !== 200) throw new Error('数据获取失败');
-    const { more, playlists } = data;
     lastHasMore = more;
-    before.current = playlists.length
-      ? playlists[playlists.length - 1].updateTime
-      : before.current;
+    offset.current += 24;
     setHasMore(more);
-    setSongList((prevState) => [...prevState, ...(playlists as never[])]);
+    setSongList((prevState) => [...prevState, ...playlists]);
   };
-  useEffect(() => {
-    scrollController.current && scrollController.current.refresh();
-    scrollController.current && scrollController.current.finishPullUp();
-    setLoading(false);
-  }, [songList.length]);
+  const onTagChange = (tag: string) => {
+    if (tag === cat.current) return;
+    setStateCat(tag);
+    cat.current = tag;
+    offset.current = 0;
+    setHasMore(true);
+    setSongList([]);
+    scrollController.current!.scrollTo(0, 0, 0);
+    fetchList();
+  };
   return (
-    <div className={styles.listWrapper}>
-      <div className={styles.scroll}>
-        <div className={styles.content}>
-          <div className={styles.list}>
-            {songList.map((item: any) => (
-              <SquareListItem
-                onClick={() => {
-                  console.log(item);
-                  props.history.push('/playList', item);
-                }}
-                key={item.id}
-                playCount={item.playCount}
-                picUrl={item.coverImgUrl}
-                title={item.name}
-              />
-            ))}
+    <div className={styles.SongList}>
+      <SimpleHeader
+        title='推荐歌单'
+        onClickBack={() => props.history.goBack()}
+      />
+      <Link to='/songList/categories' style={{ height: 0, display: 'block' }}>
+        <h1 className={styles.title}>
+          {stateCat}
+          <i className={classNames('material-icons', styles.arrow)}>
+            keyboard_arrow_right
+          </i>
+        </h1>
+      </Link>
+      <Route
+        path='/songList/categories'
+        render={(props) => (
+          <Categories {...props} onChange={onTagChange} cat={cat.current} />
+        )}
+      />
+      <div className={styles.listWrapper}>
+        <div className={styles.scroll}>
+          <div className={styles.content}>
+            <div className={styles.list}>
+              {songList.map((item: any) => (
+                <SquareListItem
+                  onClick={() => {
+                    props.history.push('/playList', item);
+                  }}
+                  key={item.id}
+                  playCount={item.playCount}
+                  picUrl={item.coverImgUrl}
+                  title={item.name}
+                />
+              ))}
+            </div>
+            <Loading visible={loading} />
+            <NoMore hasMore={hasMore} />
           </div>
-          <Loading visible={loading} />
-          <NoMore hasMore={hasMore} />
         </div>
       </div>
     </div>

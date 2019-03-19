@@ -18,6 +18,7 @@ import {
 import Tabs, { TabPane } from '../../components/Tabs';
 import { fetchSong } from '../../utils/song';
 import { loopTypes, playerSizeType } from '../../utils/types';
+import paramImg from '../../utils/paramImg';
 
 /**
  * 格式化时间
@@ -155,7 +156,7 @@ const Player = () => {
       <Tabs className={styles.tabs}>
         <TabPane>
           <div className={styles.album}>
-            <img className={styles.pic} src={current.picUrl} alt='' />
+            <img className={styles.pic} src={current.picUrl&&current.picUrl+paramImg(240)} alt='' />
           </div>
         </TabPane>
         <TabPane>

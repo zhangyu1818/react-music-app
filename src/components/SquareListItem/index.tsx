@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import classNames from 'classnames';
 import styles from './index.module.scss';
+import paramImg from '../../utils/paramImg';
 interface ListItemProps {
   playCount?: number;
   className?: string;
@@ -22,7 +23,7 @@ const SquareListItem = memo((props: ListItemProps) => (
             : props.playCount}
         </span>
       ) : null}
-      <img className={styles.img} src={props.picUrl} alt='' />
+      <img className={styles.img} src={props.picUrl + paramImg(140)} alt='' />
     </div>
     <h2 className={styles.title}>{props.title}</h2>
   </div>

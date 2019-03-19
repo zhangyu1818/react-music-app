@@ -75,7 +75,7 @@ const Home = (props: HomeProps) => {
           </div>
         </div>
         <div className={styles.recommend}>
-          <Title title='最新专辑' to="/"/>
+          <Title title='最新专辑' />
           <div className={styles.recommendList}>
             {newSong.map((item: any) => (
               <SquareListItem

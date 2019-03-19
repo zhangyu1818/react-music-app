@@ -1,0 +1,21 @@
+@import '../../scss/utils';
+.header {
+  height: rem(50);
+  background: $mainColor;
+  display: flex;
+  align-items: center;
+  .headerBackIcon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    width: rem(50);
+    height: rem(50);
+    font-size: rem(30);
+  }
+  .headerName {
+    color: #fff;
+    padding: 0 rem(20);
+    font-size: rem(14);
+  }
+}

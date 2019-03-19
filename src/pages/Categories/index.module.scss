@@ -1,0 +1,63 @@
+@import '../../scss/utils';
+.categories {
+  .content {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: #fff;
+    .categoriesList {
+      position: absolute;
+      top: rem(50);
+      right: 0;
+      bottom: 0;
+      left: 0;
+      overflow-y: scroll;
+      padding: rem(10) rem(10) rem(20);
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+      dl:not(:last-child) {
+        position: relative;
+        margin-bottom: rem(10);
+        &:after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          left: 0;
+          bottom: rem(-10);
+          border-bottom: 1px solid $borderColor;
+        }
+      }
+      dt {
+        font-size: rem(18);
+        padding: rem(10) rem(10) rem(16);
+        color: $mainColor;
+        font-weight: bold;
+      }
+      .all,
+      dd {
+        font-size: rem(14);
+        text-align: center;
+        margin: rem(4) rem(4) rem(8);
+        min-width: rem(63);
+        padding: rem(4) rem(6);
+        border-radius: rem(20);
+        display: inline-block;
+        color: rgba($fontColor, 0.8);
+        background: $secondaryColor;
+        &.all {
+          display: block;
+          padding: rem(6);
+          text-align: center;
+        }
+        &.active {
+          background: $mainColor;
+          color: #ffffff;
+        }
+      }
+    }
+  }
+}

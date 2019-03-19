@@ -39,7 +39,7 @@
       right: rem(10);
       bottom: rem(-10);
       width: 100%;
-      border-bottom: 1px solid rgba($fontColor, 0.1);
+      border-bottom: 1px solid $borderColor;
       transform: scaleY(0.4);
     }
     .itemName {

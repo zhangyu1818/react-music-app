@@ -27,9 +27,12 @@ const App = () => {
               <Route path='/search' exact component={Search} />
               <Route path='/' component={Home} />
             </Switch>
+            <Route
+              path={['/songList', '/playList', '/album']}
+              component={SongList}
+            />
             <Route path='/playList' exact component={PlayList} />
             <Route path='/album' exact component={Album} />
-            <Route path='/songList' exact component={SongList} />
           </>
         </Router>
         <Player />

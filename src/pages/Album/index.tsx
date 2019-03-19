@@ -8,6 +8,7 @@ import { useMyContext } from '../../context';
 import { ADD_MUSIC, CHANGE_PLAY_LIST } from '../../reducer/actionType';
 import { clamp } from 'lodash';
 import axios from 'axios';
+import paramImg from '../../utils/paramImg';
 
 interface PlayListState {
   album: {
@@ -106,14 +107,23 @@ const AlbumList = (props: PlayListProps) => {
         </div>
       </div>
       <div className={styles.bgImg} ref={bgImg}>
-        <img src={albumState.album.blurPicUrl} alt='' />
+        <img
+          src={
+            albumState.album.blurPicUrl &&
+            albumState.album.blurPicUrl + paramImg()
+          }
+          alt=''
+        />
       </div>
       <div className={styles.scroll} ref={scrollEle}>
-        <div style={{ willChange: 'transform' }}>
+        <div style={{ willChange: 'transform', minHeight: '101%' }}>
           <div className={styles.desc}>
             <div className={styles.imgWrapper}>
               <img
-                src={albumState.album.blurPicUrl}
+                src={
+                  albumState.album.blurPicUrl &&
+                  albumState.album.blurPicUrl + paramImg(140)
+                }
                 alt=''
                 className={styles.coverImg}
               />
@@ -125,7 +135,10 @@ const AlbumList = (props: PlayListProps) => {
               <h1 className={styles.playListName}>{albumState.album.name}</h1>
               <div className={styles.creator}>
                 <img
-                  src={albumState.album.artist.picUrl}
+                  src={
+                    albumState.album.artist.picUrl &&
+                    albumState.album.artist.picUrl + paramImg(36)
+                  }
                   alt=''
                   className={styles.creatorAvatar}
                 />
