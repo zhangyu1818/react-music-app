@@ -1,25 +1,13 @@
 @import '../../scss/utils';
 
-.swiper {
+.carousel {
   position: relative;
   touch-action: none;
   overflow: hidden;
   width: 100%;
-  .animate {
-    position: relative;
-    font-size: 0;
-    width: 100%;
-    white-space: nowrap;
-    .swiperSlider {
-      display: inline-block;
-      width: 100%;
-      .swiperImg {
-        width: 100%;
-        will-change: transform;
-      }
-    }
-  }
-  .swiperPagination {
+  z-index: 1;
+  border-radius: rem(6);
+  .carouselPagination {
     position: absolute;
     font-size: 0;
     width: 100%;
@@ -29,9 +17,6 @@
     .dot {
       &+.dot{
         margin-left: rem(6);
-      }
-      &.current{
-        background: rgba(#666,0.7);
       }
       display: inline-block;
       width: rem(5.5);

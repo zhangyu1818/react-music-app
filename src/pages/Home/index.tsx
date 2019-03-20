@@ -1,15 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Swiper, { SwiperSlider } from '../../components/Swiper';
+import Carousel from '../../components/Carousel';
 import styles from './index.module.scss';
 import Title from '../../components/Title';
 import SquareListItem from '../../components/SquareListItem';
 import BScroll from 'better-scroll';
 import { useMyContext } from '../../context';
 import axios from 'axios';
-interface Banner {
-  imageUrl: string;
-  [propName: string]: any;
-}
+
 interface HomeProps {
   [propName: string]: any;
 }
@@ -47,16 +44,7 @@ const Home = (props: HomeProps) => {
     <div className={styles.home} ref={scrollEle}>
       <div className={styles.homeScroll}>
         <div className={styles.bannerWrapper}>
-          <Swiper className={styles.banner} autoplay pagination>
-            {banners.map((banner: Banner, index) => (
-              <SwiperSlider key={index}>
-                <div
-                  style={{ backgroundImage: `url(${banner.imageUrl})` }}
-                  className={styles.bannerImg}
-                />
-              </SwiperSlider>
-            ))}
-          </Swiper>
+          <Carousel className={styles.banner} imgList={banners} />
         </div>
         <div className={styles.recommend}>
           <Title title='推荐歌单' to='/songList' />
