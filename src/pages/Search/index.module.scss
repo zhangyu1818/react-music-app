@@ -1,0 +1,68 @@
+@import '../../scss/utils';
+.searchWrapper {
+  padding: rem(20) rem(12.5) 0;
+  margin: auto;
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: rem(90);
+    z-index: -1;
+    background: $mainColor;
+  }
+  .search {
+    display: flex;
+    .searchInput {
+      background: #ffffff;
+      flex: 1;
+      padding: 0 rem(8);
+      display: flex;
+      align-items: center;
+      border: 1px solid $secondaryColor;
+      border-radius: rem(3);
+      margin-right: rem(12);
+      i {
+        color: $mainColor;
+        font-size: rem(18);
+        margin-right: rem(10);
+      }
+      input {
+        outline: none;
+        border: none;
+        height: 100%;
+        width: 90%;
+        color: $mainColor;
+      }
+    }
+    .submitBtn {
+      background: $secondaryColor;
+      color: $mainColor;
+      border-radius: rem(4);
+      display: inline-flex;
+      outline: none;
+      border: none;
+      align-items: center;
+      justify-content: center;
+      height: rem(30);
+      padding: 0 rem(10);
+      font-size: rem(14);
+    }
+  }
+  .hotList {
+    margin-top: rem(60);
+    .tag {
+      margin-right: rem(10);
+      margin-bottom: rem(16);
+      font-size: rem(12);
+      text-align: center;
+      padding: rem(4) rem(10);
+      border-radius: rem(20);
+      display: inline-block;
+      color: rgba($fontColor, 0.8);
+      background: $secondaryColor;
+    }
+  }
+}

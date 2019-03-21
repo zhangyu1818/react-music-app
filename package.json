@@ -21,7 +21,7 @@
     "react-scripts": "2.1.5",
     "react-spring": "^8.0.15",
     "react-with-gesture": "^4.0.6",
-    "simple-carousel-js": "^1.0.1",
+    "simple-carousel-js": "^1.0.3",
     "typescript": "3.3.3"
   },
   "scripts": {
