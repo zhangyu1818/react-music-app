@@ -1,6 +1,7 @@
-import React from 'react';
-import styles from './index.module.scss';
-import classNames from 'classnames';
+import React from "react";
+import styles from "./index.module.scss";
+import classNames from "classnames";
+
 export interface PlayListItemProps {
   index: number;
   name: string;

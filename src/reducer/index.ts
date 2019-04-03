@@ -1,6 +1,6 @@
-import * as types from './actionType';
-import { loopTypes, playerSizeType } from '../utils/types';
-import { shuffle, clamp } from 'lodash';
+import * as types from "./actionType";
+import { loopTypes, playerSizeType } from "../utils/types";
+import { shuffle } from "lodash";
 
 export interface Song {
   url: undefined;
@@ -37,6 +37,7 @@ export interface State {
   playerSize: playerSizeType;
   showPlayer: boolean;
   loading: boolean;
+  searchValue: string;
 }
 
 export interface Action {
@@ -48,6 +49,7 @@ export interface Action {
   size?: playerSizeType;
   track?: any;
   songId?: number;
+  searchValue?: string;
 }
 
 export const initialState: State = {
@@ -62,7 +64,8 @@ export const initialState: State = {
   loopType: loopTypes.order,
   playerSize: playerSizeType.normal,
   showPlayer: false,
-  loading: false
+  loading: false,
+  searchValue: ""
 };
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -79,6 +82,12 @@ export const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         loading: true
+      };
+    }
+    case types.CHANGE_CURRENT_ID: {
+      return {
+        ...state,
+        currentId: action.songId
       };
     }
     // 改变播放状态
@@ -224,6 +233,15 @@ export const reducer = (state: State, action: Action): State => {
         currentId: nextSongId,
         currentIndex: nextIndex
       };
+    }
+    case types.CHANGE_SEARCH_VALUE: {
+      const { searchValue } = action;
+      if (searchValue !== undefined)
+        return {
+          ...state,
+          searchValue
+        };
+      else return state;
     }
     default:
       return state;

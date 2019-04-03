@@ -1,0 +1,53 @@
+@import "../../scss/utils";
+
+.searchList {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+
+  .list {
+    position: absolute;
+    bottom: 0;
+    top: rem(50);
+    left: 0;
+    right: 0;
+    overflow-y: scroll;
+
+    .wrapper {
+      margin: 0;
+      padding: 0;
+
+      .item {
+        padding: rem(6) rem(10);
+        position: relative;
+
+        &:after {
+          content: '';
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          margin: 0 rem(10);
+          border-bottom: 1px solid rgba($fontColor, 0.1);
+          transform: scaleY(0.4);
+        }
+
+        .songName {
+          margin-bottom: rem(5);
+          color: $fontColor;
+          font-size: rem(16);
+          @include text-overflow()
+        }
+
+        .singer {
+          color: rgba($fontColor, 0.8);
+          font-size: rem(12);
+          @include text-overflow()
+        }
+      }
+    }
+  }
+}

@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import classNames from 'classnames';
-import Context from '../../context';
+import React, { useContext, useEffect, useRef, useState } from "react";
+import classNames from "classnames";
+import Context from "../../context";
 
-import ProgressBar from '../../components/Progress';
-import Lyric from '../../components/Lyric';
-import styles from './index.module.scss';
+import ProgressBar from "../../components/Progress";
+import Lyric from "../../components/Lyric";
+import styles from "./index.module.scss";
 import {
   CHANGE_CURRENT_SONG,
   CHANGE_LOOP_TYPE,
@@ -14,11 +14,11 @@ import {
   NEXT_SONG,
   PREV_SONG,
   SHOW_PLAYER
-} from '../../reducer/actionType';
-import Tabs, { TabPane } from '../../components/Tabs';
-import { fetchSong } from '../../utils/song';
-import { loopTypes, playerSizeType } from '../../utils/types';
-import paramImg from '../../utils/paramImg';
+} from "../../reducer/actionType";
+import Tabs, { TabPane } from "../../components/Tabs";
+import { fetchSong } from "../../utils/song";
+import { loopTypes, playerSizeType } from "../../utils/types";
+import paramImg from "../../utils/paramImg";
 
 /**
  * 格式化时间
@@ -139,9 +139,9 @@ const Player = () => {
         </div>
       </div>
       <div className={styles.controllerGroup}>
-        <button className={styles.button}>
-          <i className='material-icons'>favorite_border</i>
-        </button>
+        {/*<button className={styles.button}>*/}
+        {/*  <i className='material-icons'>favorite_border</i>*/}
+        {/*</button>*/}
         <button className={styles.button} onClick={toggleLoopType}>
           {loopType === loopTypes.order ? (
             <i className='material-icons'>repeat</i>

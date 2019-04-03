@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styles from './index.module.scss';
-import classNames from 'classnames';
-import BScroll from 'better-scroll';
-import ListItem from '../../components/ListItem';
-import { Link } from 'react-router-dom';
-import { useMyContext } from '../../context';
-import { ADD_MUSIC, CHANGE_PLAY_LIST } from '../../reducer/actionType';
-import { clamp } from 'lodash';
-import axios from 'axios';
-import paramImg from '../../utils/paramImg';
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./index.module.scss";
+import classNames from "classnames";
+import BScroll from "better-scroll";
+import ListItem from "../../components/PlayListItem";
+import { Link } from "react-router-dom";
+import { useMyContext } from "../../context";
+import { ADD_MUSIC, CHANGE_PLAY_LIST } from "../../reducer/actionType";
+import { clamp } from "lodash";
+import axios from "axios";
+import paramImg from "../../utils/paramImg";
 
 interface PlayListState {
   album: {

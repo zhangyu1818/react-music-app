@@ -10,3 +10,5 @@ export const PREV_SONG = 'PREV_SONG';
 export const LOADING = 'LOADING';
 export const DELETE_SONG = 'DELETE_SONG';
 export const INIT_LIST = 'INIT_LIST';
+export const CHANGE_SEARCH_VALUE = "CHANGE_SEARCH_VALUE";
+export const CHANGE_CURRENT_ID = "CHANGE_CURRENT_ID";

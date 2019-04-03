@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import Carousel from '../../components/Carousel';
-import styles from './index.module.scss';
-import Title from '../../components/Title';
-import SquareListItem from '../../components/SquareListItem';
-import BScroll from 'better-scroll';
-import { useMyContext } from '../../context';
-import axios from 'axios';
+import React, { useEffect, useRef, useState } from "react";
+import Carousel from "../../components/Carousel";
+import styles from "./index.module.scss";
+import Title from "../../components/Title";
+import SquareListItem from "../../components/SquareListItem";
+import BScroll from "better-scroll";
+import { useMyContext } from "../../context";
+import axios from "axios";
 
 interface HomeProps {
   [propName: string]: any;
@@ -23,22 +23,28 @@ const Home = (props: HomeProps) => {
   const scrollEle = useRef<HTMLDivElement | null>(null);
   const scrollController = useRef<BScroll | null>(null);
   useEffect(() => {
-    axios('/banner').then(({ data: { banners } }) => setBanners(banners));
-    axios('/personalized').then(({ data: { result } }) =>
-      setRecommend(result.slice(0, 6))
-    );
-    axios('/album/newest').then(({ data: { albums } }) =>
-      setNewSong(albums.slice(0, 6))
-    );
-    if (scrollEle.current) {
-      scrollController.current = new BScroll(scrollEle.current, {
-        click: true,
-        observeDOM: false
-      });
-      return () => {
-        scrollController.current && scrollController.current.destroy();
-      };
-    }
+    const fetchData = async () => {
+      await axios("/banner").then(({ data: { banners } }) =>
+        setBanners(banners)
+      );
+      await axios("/personalized").then(({ data: { result } }) =>
+        setRecommend(result.slice(0, 6))
+      );
+      await axios("/album/newest").then(({ data: { albums } }) =>
+        setNewSong(albums.slice(0, 6))
+      );
+    };
+    fetchData().then(() => {
+      if (scrollEle.current) {
+        scrollController.current = new BScroll(scrollEle.current, {
+          click: true,
+          observeDOM: false
+        });
+      }
+    });
+    return () => {
+      scrollController.current && scrollController.current.destroy();
+    };
   }, []);
   return (
     <div className={styles.home} ref={scrollEle}>

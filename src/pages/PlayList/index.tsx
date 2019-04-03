@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styles from './index.module.scss';
-import classNames from 'classnames';
-import BScroll from 'better-scroll';
-import ListItem from '../../components/ListItem';
-import { clamp } from 'lodash';
-import { useMyContext } from '../../context';
-import { ADD_MUSIC, CHANGE_PLAY_LIST } from '../../reducer/actionType';
-import paramImg from '../../utils/paramImg';
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./index.module.scss";
+import classNames from "classnames";
+import BScroll from "better-scroll";
+import ListItem from "../../components/PlayListItem";
+import { clamp } from "lodash";
+import { useMyContext } from "../../context";
+import { ADD_MUSIC, CHANGE_PLAY_LIST } from "../../reducer/actionType";
+import paramImg from "../../utils/paramImg";
 
 interface PlayListState {
   coverImgUrl: string;

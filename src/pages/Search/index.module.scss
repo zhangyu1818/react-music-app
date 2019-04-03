@@ -16,6 +16,50 @@
   .search {
     display: flex;
     .searchInput {
+      .suggest {
+        position: absolute;
+        background: #ffffff;
+        left: 0;
+        right: 0;
+        top: rem(30);
+        border-radius: rem(3);
+        box-shadow: 0 2px rem(4) 1px rgba(#000, 0.4);
+        opacity: 0;
+        transform: scaleY(0);
+        transform-origin: top;
+        transition: all 0.2s;
+
+        &.active {
+          opacity: 1;
+          transform: scaleY(1);
+        }
+
+        ul {
+          padding: rem(5) rem(10);
+
+          li {
+            position: relative;
+            padding: rem(5) rem(4);
+            list-style: none;
+            font-size: rem(12);
+            color: $fontColor;
+
+            &:not(:last-child):after {
+              content: '';
+              position: absolute;
+              right: 0;
+              bottom: 0;
+              width: 100%;
+              border-bottom: 1px solid $borderColor;
+              transform: scaleY(0.5);
+            }
+
+            @include text-overflow()
+          }
+        }
+      }
+
+      position: relative;
       background: #ffffff;
       flex: 1;
       padding: 0 rem(8);
