@@ -7,15 +7,15 @@
   width: 100%;
   z-index: 1;
   border-radius: rem(6);
-  .carouselPagination {
+  div.carouselPagination {
     position: absolute;
     font-size: 0;
     width: 100%;
     left: 0;
     bottom: rem(6.8);
     text-align: center;
-    .dot {
-      &+.dot{
+    span.dot {
+      &+span.dot{
         margin-left: rem(6);
       }
       display: inline-block;
