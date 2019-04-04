@@ -34,7 +34,6 @@ const SearchList = (props: SearchListProps) => {
     };
     if (!state.searchValue) return;
     fetchData().then(({ songs }) => {
-      console.log(songs);
       setSongList(songs);
     });
   }, [state.searchValue]);

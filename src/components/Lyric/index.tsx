@@ -97,7 +97,7 @@ class Lyric extends PureComponent<any, LyricState> {
                   currentLine === index ? styles.currentLine : null
                 )}
                 data-lines={index}
-                key={time}
+                key={index}
               >
                 {txt}
               </p>

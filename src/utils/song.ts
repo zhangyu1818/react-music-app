@@ -4,13 +4,13 @@ export const fetchSong = async (songId: number) => {
     data: {
       data: [currentSong]
     }
-  } = await axios(`/song/url?id=${songId}`);
+  } = await axios(`/api/music/song/url?id=${songId}`);
   const { id, url } = currentSong;
   const {
     data: {
       songs: [currentSongInfo]
     }
-  } = await axios(`/song/detail?ids=${songId}`);
+  } = await axios(`/api/music/song/detail?ids=${songId}`);
   const {
     name,
     al: { name: albumName, picUrl },
@@ -18,7 +18,7 @@ export const fetchSong = async (songId: number) => {
   } = currentSongInfo;
   const {
     data: { nolyric, uncollected, lrc, tlyric }
-  } = await axios(`/lyric?id=${songId}`);
+  } = await axios(`/api/music/lyric?id=${songId}`);
   return {
     id,
     name,

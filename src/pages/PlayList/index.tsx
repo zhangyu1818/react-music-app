@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import styles from "./index.module.scss";
-import classNames from "classnames";
-import BScroll from "better-scroll";
-import ListItem from "../../components/PlayListItem";
-import { clamp } from "lodash";
-import { useMyContext } from "../../context";
-import { ADD_MUSIC, CHANGE_PLAY_LIST } from "../../reducer/actionType";
-import paramImg from "../../utils/paramImg";
+import styles                                 from "./index.module.scss";
+import classNames                             from "classnames";
+import BScroll                                from "better-scroll";
+import ListItem                               from "../../components/PlayListItem";
+import { clamp }                              from "lodash";
+import { useMyContext }                       from "../../context";
+import { ADD_MUSIC, CHANGE_PLAY_LIST }        from "../../reducer/actionType";
+import paramImg                               from "../../utils/paramImg";
+import request                                from "../../utils/request";
 
 interface PlayListState {
   coverImgUrl: string;
@@ -52,8 +53,7 @@ const PlayList = (props: PlayListProps) => {
       history.push('/');
       return;
     }
-    fetch(`/playlist/detail?id=${location.state.id}`)
-      .then((res) => res.json())
+    request(`/playlist/detail?id=${location.state.id}`)
       .then(({ playlist }) => {
         setState({ ...state, ...playlist });
         setBgImg && setBgImg(playlist.coverImgUrl);

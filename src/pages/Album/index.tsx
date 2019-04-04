@@ -1,14 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import styles from "./index.module.scss";
-import classNames from "classnames";
-import BScroll from "better-scroll";
-import ListItem from "../../components/PlayListItem";
-import { Link } from "react-router-dom";
-import { useMyContext } from "../../context";
-import { ADD_MUSIC, CHANGE_PLAY_LIST } from "../../reducer/actionType";
-import { clamp } from "lodash";
-import axios from "axios";
-import paramImg from "../../utils/paramImg";
+import React, { useEffect, useRef, useState } from 'react';
+import styles from './index.module.scss';
+import classNames from 'classnames';
+import BScroll from 'better-scroll';
+import ListItem from '../../components/PlayListItem';
+import { Link } from 'react-router-dom';
+import { useMyContext } from '../../context';
+import { ADD_MUSIC, CHANGE_PLAY_LIST } from '../../reducer/actionType';
+import { clamp } from 'lodash';
+import axios from 'axios';
+import paramImg from '../../utils/paramImg';
+import request from '../../utils/request';
 
 interface PlayListState {
   album: {
@@ -60,8 +61,7 @@ const AlbumList = (props: PlayListProps) => {
       history.push('/');
       return;
     }
-    axios(`/album?id=${state.id}`).then(({ data }) => {
-      const { album, songs } = data;
+    request(`/album?id=${state.id}`).then(({ album, songs }) => {
       setAlbumState({ ...albumState, album, songs });
       if (scrollEle.current) {
         scrollController.current = new BScroll(scrollEle.current, {

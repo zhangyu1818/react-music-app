@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
-import Carousel from "../../components/Carousel";
-import styles from "./index.module.scss";
-import Title from "../../components/Title";
-import SquareListItem from "../../components/SquareListItem";
-import BScroll from "better-scroll";
-import { useMyContext } from "../../context";
-import axios from "axios";
+import React, { useEffect, useRef, useState } from 'react';
+import Carousel from '../../components/Carousel';
+import styles from './index.module.scss';
+import Title from '../../components/Title';
+import SquareListItem from '../../components/SquareListItem';
+import BScroll from 'better-scroll';
+import { useMyContext } from '../../context';
+import request from '../../utils/request';
 
 interface HomeProps {
   [propName: string]: any;
@@ -24,13 +24,11 @@ const Home = (props: HomeProps) => {
   const scrollController = useRef<BScroll | null>(null);
   useEffect(() => {
     const fetchData = async () => {
-      await axios("/banner").then(({ data: { banners } }) =>
-        setBanners(banners)
-      );
-      await axios("/personalized").then(({ data: { result } }) =>
+      await request('/banner').then(({ banners }) => setBanners(banners));
+      await request('/personalized').then(({ result }) =>
         setRecommend(result.slice(0, 6))
       );
-      await axios("/album/newest").then(({ data: { albums } }) =>
+      await request('/album/newest').then(({ albums }) =>
         setNewSong(albums.slice(0, 6))
       );
     };
