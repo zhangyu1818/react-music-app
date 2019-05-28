@@ -1,3 +1,3 @@
 simple react music app
 
-[demo](http://sbzy.me/music/v1)
+[demo](http://zhangyu1818.com/music/v1)
