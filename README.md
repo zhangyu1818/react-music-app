@@ -1,3 +1,3 @@
 simple react music app
 
-[demo](http://zhangyu1818.com/music/v1)
+第一次用ts写东西，有点辣眼睛，熟练后再重构
